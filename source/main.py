@@ -4,7 +4,7 @@ Created on Mar 8, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.0
+@version: 0.1.2
 '''
 import spider
 import time
@@ -13,8 +13,8 @@ import os
 
 def Init():
     '''首次使用时，程序初始化'''
-    Mkdir('Data')
     Mkdir('Log')
+    Mkdir('Data')
     
     File_Path=os.getcwd()+'\\Data\\user.md'
     if not os.path.exists(File_Path):   # 不存在user.md文件
@@ -33,10 +33,20 @@ def Init():
         f_obj.write(time_interval)        
         f_obj.close()
 
-def main():
-    print('学校通知自动提醒程序启动!')
-    Init()
+def Show_right():
+    '''显示程序版权声明'''
+    print('陕师大校园通知自动提醒'+' '+'V0.1.2')
+    print('版权所有 (c) QiZhao  保留所有权利。 ')
+    print('本程序仅供学习和研究使用,不得用于任何商业用途.')
+    print('如您在使用中遇到任何问题,可联系作者邮箱: zhaoqi99@outlook.com')
+    print('请按回车键继续......',end='')
+    input()
+    print('---------------------------------------------------')
+    print('陕师大校园通知自动提醒程序启动!')
     
+def main():
+    Show_right()
+    Init()
     f_obj=open('Data'+'\\user.md')
     send_number=f_obj.readline()
     to_addr_str=f_obj.readline()

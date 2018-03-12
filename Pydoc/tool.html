@@ -13,7 +13,7 @@
 &nbsp;<br>
 @author:&nbsp;QiZhao<br>
 @license:&nbsp;GNU&nbsp;GPLv3<br>
-@version:&nbsp;0.1.0</tt></p>
+@version:&nbsp;0.1.2</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -63,16 +63,18 @@ Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;返回由处理后的单条或多条日志信息组成的列表。</tt></dd></dl>
- <dl><dt><a name="-Mkdir"><strong>Mkdir</strong></a>(dir_name)</dt><dd><tt>获取到当前文件所在的目录，并检查是否有'dir_name'文件夹，<br>
+ <dl><dt><a name="-Mkdir"><strong>Mkdir</strong></a>(dir_name, flag=1)</dt><dd><tt>获取到当前文件所在的目录，并检查是否有'dir_name'文件夹，<br>
 如果不存在则自动新建'dir_name'文件夹<br>
 &nbsp;<br>
 Args:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dir_name:&nbsp;文件夹名，类型为字符串</tt></dd></dl>
- <dl><dt><a name="-Mkfile"><strong>Mkfile</strong></a>(fname)</dt><dd><tt>检查当前路径下是否存在'fname'文件，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dir_name:&nbsp;文件夹名，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;一个可选变量，决定是否在输出设备输出日志信息，默认为1(输出)</tt></dd></dl>
+ <dl><dt><a name="-Mkfile"><strong>Mkfile</strong></a>(fname, flag=1)</dt><dd><tt>检查当前路径下是否存在'fname'文件，<br>
 如果不存在则自动新建'fname'文件<br>
 &nbsp;<br>
 Args:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;fname:&nbsp;文件名，类型为字符串</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;fname:&nbsp;文件名，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;一个可选变量，决定是否在输出设备输出日志信息，默认为1(输出)</tt></dd></dl>
  <dl><dt><a name="-time_text"><strong>time_text</strong></a>()</dt><dd><tt>Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;返回当前系统时间，例如：<br>
 &nbsp;&nbsp;&nbsp;&nbsp;2018-03-09&nbsp;21:35:34</tt></dd></dl>

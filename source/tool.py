@@ -4,7 +4,7 @@ Created on Mar 8, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.0
+@version: 0.1.2
 '''
 import re
 import time
@@ -116,30 +116,34 @@ def Log_Write(subject, log_txt, flag=1):
         print(log_show, end='')
     return log_return
 
-def Mkdir(dir_name):
+def Mkdir(dir_name,flag=1):
     '''
     获取到当前文件所在的目录，并检查是否有'dir_name'文件夹，
     如果不存在则自动新建'dir_name'文件夹
     
     Args:
         dir_name: 文件夹名，类型为字符串
+        flag: 一个可选变量，决定是否在输出设备输出日志信息，默认为1(输出)
     '''
     
     File_Path = os.getcwd()+'\\'+dir_name+'\\'
     if not os.path.exists(File_Path):
         os.makedirs(File_Path)
-        print('新建文件夹:'+File_Path)
+        Log_Write('新建文件夹', File_Path+'\n', flag)
 
-def Mkfile(fname):
+def Mkfile(fname,flag=1):
     '''
     检查当前路径下是否存在'fname'文件，
     如果不存在则自动新建'fname'文件
     
     Args:
         fname: 文件名，类型为字符串
+        flag: 一个可选变量，决定是否在输出设备输出日志信息，默认为1(输出)
     '''
     fname=os.getcwd()+'\\'+fname
     if not os.path.exists(fname):
         fobj=open(fname,'w')
         fobj.close()
-        print('新建文件: '+fname)
+        Log_Write('新建文件', fname+'\n', flag)
+
+        
