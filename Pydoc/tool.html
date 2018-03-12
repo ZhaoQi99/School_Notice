@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module tool</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>tool</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:f%3A%5Ccode%5Cpython%5Cschool_notice%5Csrc%5Ctool.py">f:\code\python\school_notice\src\tool.py</a></font></td></tr></table>
+    <p><tt>Created&nbsp;on&nbsp;Mar&nbsp;8,&nbsp;2018<br>
+&nbsp;<br>
+@author:&nbsp;QiZhao<br>
+@license:&nbsp;GNU&nbsp;GPLv3<br>
+@version:&nbsp;0.1.0</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-Compare"><strong>Compare</strong></a>(txt, txt_before)</dt><dd><tt>比较两个字符串，依据比对结果，返回不同的状态值<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txt:&nbsp;sad<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txt_before:&nbsp;dsa<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;status:&nbsp;返回状态值</tt></dd></dl>
+ <dl><dt><a name="-Get_new_message"><strong>Get_new_message</strong></a>(txt_before, txt, split_rule)</dt><dd><tt>按照split_rule提供的正则表达式规则将两个字符串文本中分为三个分组，<br>
+然后对比两个findall函数返回的两个列表中的每个元组元素，<br>
+找到不存在于第一个列表中的元组，并将该元组转换为列表，<br>
+加入到一个列表中，返回一个每个元素都为列表的列表。<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txt_before:&nbsp;旧文本字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txt:&nbsp;新文本字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;split_rule:&nbsp;表示正则表达式规则的字符串,限制为三个分组<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msgs:&nbsp;由新增内容组成的列表<br>
+&nbsp;&nbsp;&nbsp;&nbsp;例如：[['a','1','一'],['b','2','二'],['c','3','三']]。</tt></dd></dl>
+ <dl><dt><a name="-Log_Write"><strong>Log_Write</strong></a>(subject, log_txt, flag=1)</dt><dd><tt>对log_txt进行处理，生成带有时间信息的日志信息，并返回或输出(可选)。<br>
+在Log目录下的subject+'log.md'文件写入日志信息。<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subject:&nbsp;生成的日志文件的文件名前缀，以及输出时显示在单条日志信息前的对日志类型的描述<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log_txt:&nbsp;不带时间信息的日志内容，类型可以为字符串，每个元素均为字符串的列表，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个元素均为列表(该列表中每个元素要求为字符串)的列表<br>
+&nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;一个可选变量，决定是否在输出设备输出日志信息，默认为1(输出)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;返回由处理后的单条或多条日志信息组成的列表。</tt></dd></dl>
+ <dl><dt><a name="-Mkdir"><strong>Mkdir</strong></a>(dir_name)</dt><dd><tt>获取到当前文件所在的目录，并检查是否有'dir_name'文件夹，<br>
+如果不存在则自动新建'dir_name'文件夹<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dir_name:&nbsp;文件夹名，类型为字符串</tt></dd></dl>
+ <dl><dt><a name="-Mkfile"><strong>Mkfile</strong></a>(fname)</dt><dd><tt>检查当前路径下是否存在'fname'文件，<br>
+如果不存在则自动新建'fname'文件<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fname:&nbsp;文件名，类型为字符串</tt></dd></dl>
+ <dl><dt><a name="-time_text"><strong>time_text</strong></a>()</dt><dd><tt>Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;返回当前系统时间，例如：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2018-03-09&nbsp;21:35:34</tt></dd></dl>
+</td></tr></table>
+</body></html>

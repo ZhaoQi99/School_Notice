@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module spider</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>spider</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:f%3A%5Ccode%5Cpython%5Cschool_notice%5Csrc%5Cspider.py">f:\code\python\school_notice\src\spider.py</a></font></td></tr></table>
+    <p><tt>Created&nbsp;on&nbsp;Mar&nbsp;7,&nbsp;2018<br>
+&nbsp;<br>
+@author:&nbsp;QiZhao<br>
+@license:&nbsp;GNU&nbsp;GPLv3<br>
+@version:&nbsp;0.1.0</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="tool.html">tool</a><br>
+</td><td width="25%" valign=top><a href="urllib.html">urllib</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-Data_processing"><strong>Data_processing</strong></a>(subject_EN, data, url_main)</dt><dd><tt>将数据文件读取为字符串形式，并将从新抓取的源码中提取的信息加工为与数据文件一致的格式，<br>
+并写入数据文件，再次将数据文件读取为字符串形式，返回两个字符串<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subject_EN:&nbsp;生成的数据文件的文件名<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data:&nbsp;存储通知提醒主要内容的列表，且该列表每个元素为元组<br>
+&nbsp;&nbsp;&nbsp;&nbsp;例如：[('关于xxx的通知','2017-03-10','id=5'),('关于xxx的通知','2017-03-10','id=3')]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url_main:&nbsp;单条通知的url的公共部分<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txt:&nbsp;新文本字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txt_before:&nbsp;旧文本字符串</tt></dd></dl>
+ <dl><dt><a name="-Log_generate"><strong>Log_generate</strong></a>(txt, txt_before, split_rule, subject, status)</dt><dd><tt>&nbsp;&nbsp;&nbsp;&nbsp;依据两个字符串对比的结果，生成不同的日志内容，并返回日志内容以及通知提醒的内容<br>
+&nbsp;&nbsp;&nbsp;&nbsp;若两个字符串不同，则依据split_rule对字符串进行分组，并生成通知提醒的内容<br>
+&nbsp;&nbsp;&nbsp;&nbsp;若两个字符串相同，则通知提醒的内容为空<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;txt:&nbsp;新文本字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;txt_before:&nbsp;旧文本字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;split_rule:&nbsp;表示正则表达式规则的字符串,限制为三个分组<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subject:&nbsp;抓取的网站类型<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status:&nbsp;两个文本字符串对比的结果<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log_txt:&nbsp;日志的主要内容，类型为字符串或每个元素均为列表的列表，且元素列表的元素均为字符串。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如:'首次抓取师师大主页！<br>
+','师大主页暂无新通知！<br>
+'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[['关于xxx的通知','2017-03-10','<a href="http://xxxx.com'],['关于xxx的通知','2017-03-10','http://xxxx.com">http://xxxx.com'],['关于xxx的通知','2017-03-10','http://xxxx.com</a>']]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new_msgs:&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存取通知提醒的主要内容，类型每个元素均为列表的列表，且元素列表的元素均为字符串。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：[['关于xxx的通知','2017-03-10','<a href="http://xxxx.com">http://xxxx.com</a>'],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;['关于xxx的通知','2017-03-10','<a href="http://xxxx.com">http://xxxx.com</a>']]</tt></dd></dl>
+ <dl><dt><a name="-Spider"><strong>Spider</strong></a>(url, url_main, rule, split_rule, subject, subject_EN, flag=1)</dt><dd><tt>爬取url的源码，并从中按照rule提供的正则表达式规则提取有用信息，并对数据进行加工，<br>
+比教新旧字符串文本，并按split_rule分组，生成通知提醒的内容，在subject_EN+'_log.md'文件中记录日志，<br>
+返回检查更新通知的结果，以及通知提醒的内容<br>
+若无新通知，则通知提醒的内容为空<br>
+支持选择是否将此次检查更新的结果写入日志<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;要爬取的页面的统一资源定位符<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url_main:&nbsp;单条通知的url的公共部分<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rule:&nbsp;表示正则表达式规则的字符串,限制为三个分组，用于从源码中提取信息<br>
+&nbsp;&nbsp;&nbsp;&nbsp;split_rule:&nbsp;表示正则表达式规则的字符串,限制为三个分组，用于将字符串分组<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subject:&nbsp;抓取的网站类型<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subject_EN:&nbsp;生成的日志文件的文件名前缀，数据文件的文件名，以及输出时显示在单条日志信息前的对日志类型的描述<br>
+&nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;一个可选变量，用来决定是否在日志中记录此次检查的结果，默认为1(记录)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;status:&nbsp;两个文本字符串对比的结果，即检查有无新通知的结果<br>
+&nbsp;&nbsp;&nbsp;&nbsp;new_msgs:&nbsp;存取通知提醒的主要内容，类型每个元素均为列表的列表，且元素列表的元素均为字符串。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：[['关于xxx的通知','2017-03-10','<a href="http://xxxx.com'],['关于xxx的通知','2017-03-10','http://xxxx.com">http://xxxx.com'],['关于xxx的通知','2017-03-10','http://xxxx.com</a>']]</tt></dd></dl>
+ <dl><dt><a name="-Spider_data"><strong>Spider_data</strong></a>(url, rule)</dt><dd><tt>爬取url的源码，并从中按照rule提供的正则表达式规则提取有用信息<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;要爬取的页面的统一资源定位符<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rule:&nbsp;表示正则表达式规则的字符串,限制为三个分组<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data_use:&nbsp;存储经正则表达式匹配后的有用信息的列表，且该列表每个元素为元组<br>
+&nbsp;&nbsp;&nbsp;&nbsp;例如：[('关于xxx的通知','2017-03-10','id=5'),('关于xxx的通知','2017-03-10','id=3')]</tt></dd></dl>
+ <dl><dt><a name="-Spider_snnu_css"><strong>Spider_snnu_css</strong></a>(send_number, to_addr_str, flag=1)</dt><dd><tt>爬取计科院主页通知信息,若有通知更新，向手机号码为send_number的接收者<br>
+发送短信提醒，向邮箱地址为to_addr_str的收件人发送邮件提醒<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;send_number:&nbsp;短信接收者的手机号码<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to_add_sttr:&nbsp;收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：'example@qq.com','example1@qq.com,example2@qq.com'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;可选变量，决定是否将此次检查结果记录在日志中，默认为1（记录）</tt></dd></dl>
+ <dl><dt><a name="-Spider_snnu_index"><strong>Spider_snnu_index</strong></a>(send_number, to_addr_str, flag=1)</dt><dd><tt>爬取校园主页通知信息,若有通知更新，向手机号码为send_number的接收者<br>
+发送短信提醒，向邮箱地址为to_addr_str的收件人发送邮件提醒<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;send_number:&nbsp;短信接收者的手机号码<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to_add_sttr:&nbsp;收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：'example@qq.com','example1@qq.com,example2@qq.com'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;可选变量，决定是否将此次检查结果记录在日志中，默认为1（记录）</tt></dd></dl>
+ <dl><dt><a name="-Spider_snnu_jwc"><strong>Spider_snnu_jwc</strong></a>(send_number, to_addr_str, flag=1)</dt><dd><tt>爬取教务处主页通知信息,若有通知更新，向手机号码为send_number的接收者<br>
+发送短信提醒，向邮箱地址为to_addr_str的收件人发送邮件提醒<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;send_number:&nbsp;短信接收者的手机号码<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to_add_sttr:&nbsp;收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：'example@qq.com','example1@qq.com,example2@qq.com'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;可选变量，决定是否将此次检查结果记录在日志中，默认为1（记录）</tt></dd></dl>
+ <dl><dt><a name="-Spider_snnu_lib"><strong>Spider_snnu_lib</strong></a>(send_number, to_addr_str, flag=1)</dt><dd><tt>爬取图书馆主页通知信息,若有通知更新，向手机号码为send_number的接收者<br>
+发送短信提醒，向邮箱地址为to_addr_str的收件人发送邮件提醒<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;send_number:&nbsp;短信接收者的手机号码<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to_add_sttr:&nbsp;收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：'example@qq.com','example1@qq.com,example2@qq.com'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;可选变量，决定是否将此次检查结果记录在日志中，默认为1（记录）</tt></dd></dl>
+ <dl><dt><a name="-Spider_snnu_xsc"><strong>Spider_snnu_xsc</strong></a>(send_number, to_addr_str, flag=1)</dt><dd><tt>爬取学生处主页通知信息,若有通知更新，向手机号码为send_number的接收者<br>
+发送短信提醒，向邮箱地址为to_addr_str的收件人发送邮件提醒<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;send_number:&nbsp;短信接收者的手机号码<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to_add_sttr:&nbsp;收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：'example@qq.com','example1@qq.com,example2@qq.com'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;可选变量，决定是否将此次检查结果记录在日志中，默认为1（记录）</tt></dd></dl>
+</td></tr></table>
+</body></html>
