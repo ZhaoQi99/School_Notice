@@ -4,7 +4,7 @@ Created on Mar 7, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.0
+@version: 0.1.1
 '''
 import urllib.request
 import re
@@ -66,7 +66,7 @@ def Data_processing(subject_EN, data, url_main):
             new_data.append(temp)
         data = new_data
         
-    Mkfile(file)    # 初次抓取时新建数据文件
+    tool.Mkfile(file)    # 初次抓取时新建数据文件
     f_before = open(file, 'rb') # 读取数据文件中的通知信息
     txt_before = f_before.read().decode('utf-8')
     f_before.close()
@@ -167,8 +167,8 @@ def Spider_snnu_index(send_number,to_addr_str,flag=1):
     '''
     subject_EN = 'snnu_index'
     subject = '师大主页'
-    url = 'http://www.snnu.edu.cn/announce-1348-1.html'
-    url_main = 'www.snnu.edu.cn/info/1085/'
+    url = 'http://www.snnu.edu.cn/tzgg.htm'
+    url_main = 'http://www.snnu.edu.cn/info/1085/'
     rule = 'info/1085/(\d+\.htm)" target="_blank">([^ ]*)（(\d*-\d+-\d+)'
     split_rule = '([^ ]*) (\d*-\d*-\d*) ([^\n]*)\n'
     
