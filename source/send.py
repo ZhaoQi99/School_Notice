@@ -1,10 +1,10 @@
-# encoding='utf-8' 
+﻿# encoding='utf-8' 
 '''
 Created on Mar 7, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.0
+@version: 0.1.3
 '''
 from twilio.rest import Client 
 from email.mime.text import MIMEText
@@ -45,6 +45,8 @@ def Send_sms(send_number, msg):
     except ConnectionError:
 #         print('发送失败，请检查你的账号是否有效或网络是否良好！')
         log_send_sms = send_number + ' ' + '短信发送失败，请检查你的账号是否有效或网络是否良好!' + '\n'
+    except base.exceptions.TwilioRestException:
+        log_send_sms=send_number+' '+'短信发送失败,手机号码尚未经过验证，请联系作者进行验证!\n'
     return log_send_sms
 
     
