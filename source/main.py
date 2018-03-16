@@ -4,7 +4,7 @@ Created on Mar 8, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.2
+@version: 0.1.4
 '''
 import spider
 import time
@@ -21,7 +21,7 @@ def Init():
         Mkfile('Data\\' + 'user.md')
         
         f_obj=open(File_Path,'w')
-        print('请输入短信接受者的电话号码(加国际区号),如:+8615012345678')
+        print('请输入短信接受者的电话号码(加国际区号,多个电话号码之间以,分隔),如:+8615012345678')
         send_number=input()
         print('请输入收件人的邮件地址(多个邮件地址之间以,分隔),如:example.com')
         to_addr_str=input()
@@ -35,7 +35,7 @@ def Init():
 
 def Show_right():
     '''显示程序版权声明'''
-    print('陕师大校园通知自动提醒'+' '+'V0.1.3')
+    print('陕师大校园通知自动提醒'+' '+'V0.1.4')
     print('版权所有 (c) QiZhao  保留所有权利。 ')
     print('本程序仅供学习和研究使用,不得用于任何商业用途.')
     print('如您在使用中遇到任何问题,可联系作者邮箱: zhaoqi99@outlook.com')

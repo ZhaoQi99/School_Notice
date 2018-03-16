@@ -1,10 +1,10 @@
-﻿# encoding='utf-8' 
+# encoding='utf-8' 
 '''
 Created on Mar 7, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.3
+@version: 0.1.4
 '''
 from twilio.rest import Client 
 from email.mime.text import MIMEText
@@ -13,10 +13,9 @@ from tool import Log_Write
 
 
 def Send_sms(send_number, msg):
-    # Todo: 支持多个号码的发送
     '''
     向手机号码为send_number的人发送内容为msg的短信
-    
+    支持多个手机号码的发送
     Args:
         send_number: 短信接收者的手机号码
         msg: 要发送的文本内容，类型为字符串
@@ -38,15 +37,17 @@ def Send_sms(send_number, msg):
 
     log_send_sms = ''
     client = Client(account_sid, auth_token)
-    try:
-        client.messages.create(to=send_number, from_=twilio_number, body=msg)
-#         print('短信已经发送！')
-        log_send_sms = send_number + ' ' + '短信已经发送' + '\n'
-    except ConnectionError:
-#         print('发送失败，请检查你的账号是否有效或网络是否良好！')
-        log_send_sms = send_number + ' ' + '短信发送失败，请检查你的账号是否有效或网络是否良好!' + '\n'
-    except base.exceptions.TwilioRestException:
-        log_send_sms=send_number+' '+'短信发送失败,手机号码尚未经过验证，请联系作者进行验证!\n'
+    send_number_list = send_number.split(',')   # 多个号码的发送
+    for send_number in send_number_list: 
+        try:
+            client.messages.create(to=send_number, from_=twilio_number, body=msg)
+#             print('短信已经发送！')
+            log_send_sms += send_number + ' ' + '短信已经发送' + '\n'
+        except ConnectionError:
+#             print('发送失败，请检查你的账号是否有效或网络是否良好！')
+            log_send_sms += send_number + ' ' + '短信发送失败，请检查你的账号是否有效或网络是否良好!' + '\n'
+        except base.exceptions.TwilioRestException:
+            log_send_sms+=send_number+' '+'短信发送失败,手机号码尚未经过验证，请联系作者进行验证!\n'
     return log_send_sms
 
     
