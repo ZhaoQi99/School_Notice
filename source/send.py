@@ -4,7 +4,7 @@ Created on Mar 7, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.4
+@version: 0.1.5
 '''
 from twilio.rest import Client 
 from email.mime.text import MIMEText
@@ -40,16 +40,20 @@ def Send_sms(send_number, msg):
     send_number_list = send_number.split(',')   # 多个号码的发送
     for send_number in send_number_list: 
         try:
+            # 修复由于最后一个元素的结尾多出一个换行导致的日志记录混乱的问题
+            if(send_number==send_number_list[-1]):
+                send_number=send_number[0:-1]
+#                print(send_number)
             client.messages.create(to=send_number, from_=twilio_number, body=msg)
 #             print('短信已经发送！')
-            log_send_sms += send_number + ' ' + '短信已经发送' + '\n'
+            log_send_sms += send_number + ' ' + '短信已经发送!  ' 
         except ConnectionError:
 #             print('发送失败，请检查你的账号是否有效或网络是否良好！')
-            log_send_sms += send_number + ' ' + '短信发送失败，请检查你的账号是否有效或网络是否良好!' + '\n'
+            log_send_sms += send_number + ' ' + '短信发送失败，请检查你的账号是否有效或网络是否良好!'
         except base.exceptions.TwilioRestException:
-            log_send_sms+=send_number+' '+'短信发送失败,手机号码尚未经过验证，请联系作者进行验证!\n'
+            log_send_sms+=send_number+' '+'短信发送失败,手机号码尚未经过验证，请联系作者进行验证!'
+    log_send_sms+='\n'
     return log_send_sms
-
     
 def Send_email(txt, to_addr_str, subject):
     '''
@@ -85,10 +89,13 @@ def Send_email(txt, to_addr_str, subject):
     try:
         smtp.sendmail(from_addr, to_addr_list, msg.as_string())
 #         print('邮件发送成功！')
-        log_send_email = to_addr_str + ' ' + '邮件发送成功！' + '\n'
+        log_send_email = to_addr_str[0:-1]+' 邮件发送成功！' + '\n'
     except ConnectionError:
 #         print('发送失败，请检查你的账号是否有效或网络是否良好！')
-        log_send_email = to_addr_str + ' ' + '邮件发送失败，请检查你的账号是否有效或网络是否良好！' + '\n'
+        log_send_email = to_addr_str[0:-1] + ' ' + '邮件发送失败，请检查你的账号是否有效或网络是否良好！' + '\n'
+     
+    smtp.quit()
+    return log_send_email
      
     smtp.quit()
     return log_send_email
