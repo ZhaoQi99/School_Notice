@@ -4,7 +4,7 @@ Created on Mar 8, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.5
+@version: 0.1.6
 '''
 import spider
 import time
@@ -37,7 +37,7 @@ def Init():
 
 def Show_right():
     '''显示程序版权声明'''
-    print('陕师大校园通知自动提醒'+' '+'V0.1.5')
+    print('陕师大校园通知自动提醒'+' '+'V0.1.6')
     print('版权所有 (c) QiZhao  保留所有权利。 ')
     print('本程序仅供学习和研究使用,不得用于任何商业用途.')
     print('如您在使用中遇到任何问题,可联系作者邮箱: zhaoqi99@outlook.com')

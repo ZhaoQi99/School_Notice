@@ -169,7 +169,7 @@ def Spider_snnu_index(send_number,to_addr_str,flag=1):
     subject = '师大主页'
     url = 'http://www.snnu.edu.cn/tzgg.htm'
     url_main = 'http://www.snnu.edu.cn/info/1085/'
-    rule = 'info/1085/(\d+\.htm)" target="_blank">([^ ]*)（(\d*-\d+-\d+)'
+    rule = 'info/1085/(\d+\.htm)" target="_blank">([\s\S]{5,100})（(\d*-\d*-\d*)）'
     split_rule = '([^ ]*) (\d*-\d*-\d*) ([^\n]*)\n'
     
     status, new_msgs = Spider(url, url_main, rule, split_rule, subject, subject_EN,flag)
@@ -262,7 +262,7 @@ def Spider_snnu_lib(send_number,to_addr_str,flag=1):
     subject = '图书馆主页'
     url = 'http://www.lib.snnu.edu.cn/action.do?webid=w-d-bggg-l'
     url_main = 'http://www.lib.snnu.edu.cn/action.do?webid=w-l-showmsg&gtype=a&pid='
-    rule = 'pid=(\d*)[^>]*>([^<]*)[^\d]*2[^\d]*(\d*-\d*-\d*)'
+    rule = 'pid=(\d*)[\s\S]{20,57}>([^<]*)</[af][\S\s]{18,70}(\d{4}-\d*-\d*)'
     split_rule = '([^ ]*) (\d*-\d*-\d*) ([^\n]*)\n'
     
     status, new_msgs = Spider(url, url_main, rule, split_rule, subject, subject_EN,flag)
