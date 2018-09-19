@@ -237,7 +237,7 @@ def Spider_snnu_xsc(send_number,to_addr_str,flag=1):
     subject_EN = 'snnu_xsc'
     subject = '学生处主页'
     url = 'http://www.xsc.snnu.edu.cn/Announcements.asp'
-    url_main = 'http://www.xsc.snnu.edu.cn/Announcements.asp?id=138&bh='
+    url_main = 'http://www.xsc.snnu.edu.cn/Announcements.asp?id=144&bh='
     rule = 'gk3">(?P<time>\d*-\d*-\d*)[^;]*;[^;]*;[^;]*;[^;]*;bh=(?P<link>\d*)[^>]*>(?P<title>[^</]*)'
     split_rule = '([^ ]*) (\d*-\d*-\d*) ([^\n]*)\n'
     
