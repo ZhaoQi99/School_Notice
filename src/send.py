@@ -10,7 +10,7 @@ from twilio.rest import Client
 from email.mime.text import MIMEText
 import smtplib
 from tool import Log_Write
-
+import configs
 
 def Send_sms(send_number, msg):
     '''
@@ -31,9 +31,9 @@ def Send_sms(send_number, msg):
     '''
     
     # 从twilio上获取
-    account_sid = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    auth_token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    twilio_number = '+xxxxxxxxx'
+    account_sid = configs.ACCOUNT_ID
+    auth_token = configs.AUTH_TOKEN
+    twilio_number = configs.TWILIO_NUMBER
 
     log_send_sms = ''
     client = Client(account_sid, auth_token)
@@ -71,12 +71,12 @@ def Send_email(txt, to_addr_str, subject):
             'example@qq.com 邮件发送失败，请检查你的账号是否有效或网络是否良好！\n'
             'example1@qq.com,example2@qq.com 邮件发送成功！\n'
     '''
-    from_addr = 'xxxxxxxxxxxx@qq.com'  # 发件人的邮件地址
-    password = '**********'  # 非QQ密码，应为SMTP服务授权码，可在QQ邮件设置的账户选项中获取
+    from_addr = configs.FROM_ADDR  # 发件人的邮件地址
+    password = configs.PASSWORD # 非QQ密码，应为SMTP服务授权码，可在QQ邮件设置的账户选项中获取
     
     msg = MIMEText(txt)
     msg['Subject'] = subject  # 邮件主题
-    msg['From'] = 'xxxxxxxxx@qq.com'  # 使用QQ邮箱发送时，此处必须与from_addr一致
+    msg['From'] = configs.FROM_ADDR  # 使用QQ邮箱发送时，此处必须与from_addr一致
                                     # 使用其他邮箱的情况尚未测试
     msg['To'] = to_addr_str
     to_addr_list = to_addr_str.split(',')  # ['example1@qq.com','example2@qq.com']
