@@ -1,0 +1,10 @@
+/.settings
+/.project
+/.pydevproject
+/.classpath
+/src/__pycache__/
+/src/Data/
+/src/Log/
+/src/main.spec
+/src/build/
+/src/dist/
