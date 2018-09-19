@@ -4,7 +4,7 @@ Created on Mar 7, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.5
+@version: 0.1.7
 '''
 from twilio.rest import Client 
 from email.mime.text import MIMEText

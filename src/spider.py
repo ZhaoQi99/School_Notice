@@ -4,7 +4,7 @@ Created on Mar 7, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.6
+@version: 0.1.7
 '''
 import urllib.request
 import re
