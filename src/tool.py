@@ -33,7 +33,7 @@ def Log_Write(subject, log_txt, flag=1):
         
     '''
 
-    file_name = 'Log\\' + subject + '_log.log'
+    file_name = 'Log/' + subject + '_log.log'
     file = open(file_name, 'a', encoding='utf-8')  # 以“附加写”的方式打开文件
     log_show = ''
     log_return = []
@@ -64,7 +64,7 @@ def Mkdir(dir_name,flag=1):
         flag: 一个可选变量，决定是否在输出设备输出日志信息，默认为1(输出)
     '''
     
-    File_Path = os.getcwd()+'\\'+dir_name+'\\'
+    File_Path = os.getcwd()+'/'+dir_name+'/'
     if not os.path.exists(File_Path):
         os.makedirs(File_Path)
         Log_Write('新建文件夹', File_Path+'\n', flag)
@@ -78,7 +78,7 @@ def Mkfile(fname,flag=1):
         fname: 文件名，类型为字符串
         flag: 一个可选变量，决定是否在输出设备输出日志信息，默认为1(输出)
     '''
-    fname=os.getcwd()+'\\'+fname
+    fname=os.getcwd()+'/'+fname
     if not os.path.exists(fname):
         fobj=open(fname,'w')
         fobj.close()

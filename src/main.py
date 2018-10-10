@@ -18,11 +18,11 @@ def Init():
     '''首次使用时，程序初始化'''
     Mkdir('Log')
     Mkdir('Data')
-    Mkfile('Log\\' + 'Exception_log.log')
+    Mkfile('Log/' + 'Exception_log.log')
     
     File_Path=os.getcwd()+'\\Data\\user.md'
     if not os.path.exists(File_Path):   # 不存在user.md文件
-        Mkfile('Data\\' + 'user.md')
+        Mkfile('Data/' + 'user.md')
         
         f_obj=open(File_Path,'w')
         print('请输入短信接受者的电话号码(加国际区号,多个电话号码之间以,分隔),如:+8615012345678')
@@ -52,7 +52,7 @@ def Show_right():
 def main():
     Show_right()
     Init()
-    f_obj=open('Data'+'\\user.md')
+    f_obj=open('Data'+'/user.md')
     send_number=f_obj.readline()
     to_addr_str=f_obj.readline()
     time_interval=(int)(f_obj.readline())

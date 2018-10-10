@@ -55,7 +55,7 @@ def Data_processing(subject_EN, data, url_main):
     for item_dict in data:
         item_dict['link']=url_main+item_dict['link']
     
-    file = 'Data\\' + subject_EN + '.md'
+    file = 'Data/' + subject_EN + '.md'
     tool.Mkfile(file)  # 初次抓取时新建数据文件
     f_before = open(file, 'rb')  # 读取数据文件中的通知信息
     txt_before = f_before.read().decode('utf-8')
