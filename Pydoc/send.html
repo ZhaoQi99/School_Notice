@@ -9,11 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>send</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:f%3A%5Ccode%5Cpython%5Cschool_notice%5Csrc%5Csend.py">f:\code\python\school_notice\src\send.py</a></font></td></tr></table>
-    <p><tt>Created&nbsp;on&nbsp;Mar&nbsp;7,&nbsp;2018<br>
-&nbsp;<br>
-@author:&nbsp;QiZhao<br>
-@license:&nbsp;GNU&nbsp;GPLv3<br>
-@version:&nbsp;0.1.7</tt></p>
+    <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -21,9 +17,10 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="twilio.base.html">twilio.base</a><br>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="configs.html">configs</a><br>
 </td><td width="25%" valign=top><a href="smtplib.html">smtplib</a><br>
-</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top><a href="twilio.html">twilio</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -35,45 +32,41 @@
 支持是否写入日志记录的选择&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 Args:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;msgs:&nbsp;存储要发送的内容的列表，且该列表的每个元素为列表，<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;列表元素中的元素必须按照[标题,时间,链接]的顺序，例如：<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[['关于xxx的通知','2017-03-10','<a href="http://xxxx.com'],['关于xxx的通知','2017-03-10','http://xxxx.com">http://xxxx.com'],['关于xxx的通知','2017-03-10','http://xxxx.com</a>']]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msgs:&nbsp;存储要发送的内容的列表，且该列表的每个元素为字典，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;列表元素中的字典必须包含三个键值对,且key必须为'title','link','date'，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'<a href="http://xxxx.com">http://xxxx.com</a>'},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{'title':'关于xxx的通知','date':'2017-03-10','link':'<a href="http://xxxx.com">http://xxxx.com</a>'}]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subject:&nbsp;要发送的邮件主题<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_number:&nbsp;短信接收者的手机号码<br>
 &nbsp;&nbsp;&nbsp;&nbsp;to_addr_str:&nbsp;收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：'example@qq.com','example1@qq.com,example2@qq.com'<br>
 &nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;一个可选变量，用来决定是否在发送日志中记录此次发送信息，默认为1(记录)</tt></dd></dl>
- <dl><dt><a name="-Send_email"><strong>Send_email</strong></a>(txt, to_addr_str, subject)</dt><dd><tt>&nbsp;&nbsp;&nbsp;&nbsp;向to_addr_str中的邮箱地址发送主题为subject，正文部分为txt的邮件<br>
-&nbsp;&nbsp;&nbsp;&nbsp;支持多人同时发送<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Args:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;txt:&nbsp;要发送的邮件的正文部分，类型为字符串<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to_add_str:&nbsp;收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：'example@qq.com','example1@qq.com,example2@qq.com'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subject:&nbsp;邮件主题<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Returns:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log_send_email:&nbsp;经过处理的含收件人邮箱地址以及发送结果的日志信息，类型为字符串<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：'example@qq.com&nbsp;邮件发送成功！<br>
-'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'example@qq.com&nbsp;邮件发送失败，请检查你的账号是否有效或网络是否良好！<br>
-'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'example1@qq.com,example2@qq.com&nbsp;邮件发送成功！<br>
-'</tt></dd></dl>
- <dl><dt><a name="-Send_sms"><strong>Send_sms</strong></a>(send_number, msg)</dt><dd><tt>&nbsp;&nbsp;&nbsp;&nbsp;向手机号码为send_number的人发送内容为msg的短信<br>
-&nbsp;&nbsp;&nbsp;&nbsp;支持多个手机号码的发送<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Args:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send_number:&nbsp;短信接收者的手机号码<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;要发送的文本内容，类型为字符串<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Returns:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;经过处理的含短信接收者手机号码以及发送结果的日志信息，类型为字符串<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+8615012345678&nbsp;短信已经发送<br>
-'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+8615012345678&nbsp;短信发送失败，请检查你的账号是否有效或网络是否良好!<br>
-'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;send_number应已经在twilio上验证过<br>
-&nbsp;&nbsp;&nbsp;&nbsp;msg中不能包含敏感词，否则短信会被运营商拦截</tt></dd></dl>
+ <dl><dt><a name="-Send_email"><strong>Send_email</strong></a>(txt, to_addr_str, subject)</dt><dd><tt>向to_addr_str中的邮箱地址发送主题为subject，正文部分为txt的邮件<br>
+支持多人同时发送<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txt:&nbsp;要发送的邮件的正文部分，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to_add_str:&nbsp;收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：'example@qq.com','example1@qq.com,example2@qq.com'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subject:&nbsp;邮件主题<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log_send_email:&nbsp;经过处理的含收件人邮箱地址以及发送结果的日志信息，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：'example@qq.com&nbsp;邮件发送成功！'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'example@qq.com&nbsp;邮件发送失败，请检查你的账号是否有效或网络是否良好！'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'example1@qq.com,example2@qq.com&nbsp;邮件发送成功！'</tt></dd></dl>
+ <dl><dt><a name="-Send_sms"><strong>Send_sms</strong></a>(send_number, msg)</dt><dd><tt>向手机号码为send_number的人发送内容为msg的短信<br>
+支持多个手机号码的发送<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;send_number:&nbsp;短信接收者的手机号码<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;要发送的文本内容，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;经过处理的含短信接收者手机号码以及发送结果的日志信息，类型为字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;例如:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'+8615012345678&nbsp;短信已经发送'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'+8615012345678&nbsp;短信发送失败，请检查你的账号是否有效或网络是否良好!'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+send_number应已经在twilio上验证过<br>
+msg中不能包含敏感词，否则短信会被运营商拦截</tt></dd></dl>
 </td></tr></table>
 </body></html>

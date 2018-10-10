@@ -1,4 +1,3 @@
-# encoding='utf-8' 
 import twilio
 '''
 Created on Mar 7, 2018
@@ -24,8 +23,8 @@ def Send_sms(send_number, msg):
     Returns:
         经过处理的含短信接收者手机号码以及发送结果的日志信息，类型为字符串
         例如:
-        '+8615012345678 短信已经发送\n'
-        '+8615012345678 短信发送失败，请检查你的账号是否有效或网络是否良好!\n'
+        '+8615012345678 短信已经发送'
+        '+8615012345678 短信发送失败，请检查你的账号是否有效或网络是否良好!'
         
     send_number应已经在twilio上验证过
     msg中不能包含敏感词，否则短信会被运营商拦截
@@ -67,9 +66,9 @@ def Send_email(txt, to_addr_str, subject):
         
     Returns:
         log_send_email: 经过处理的含收件人邮箱地址以及发送结果的日志信息，类型为字符串
-            例如：'example@qq.com 邮件发送成功！\n'
-            'example@qq.com 邮件发送失败，请检查你的账号是否有效或网络是否良好！\n'
-            'example1@qq.com,example2@qq.com 邮件发送成功！\n'
+            例如：'example@qq.com 邮件发送成功！'
+            'example@qq.com 邮件发送失败，请检查你的账号是否有效或网络是否良好！'
+            'example1@qq.com,example2@qq.com 邮件发送成功！'
     '''
     from_addr = configs.FROM_ADDR  # 发件人的邮件地址
     password = configs.PASSWORD # 非QQ密码，应为SMTP服务授权码，可在QQ邮件设置的账户选项中获取
