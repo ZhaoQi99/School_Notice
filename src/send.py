@@ -5,7 +5,7 @@ Created on Mar 7, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.7
+@version: 0.2.0
 '''
 from twilio.rest import Client 
 from email.mime.text import MIMEText
@@ -106,9 +106,10 @@ def Send(msgs, subject, send_number,to_addr_str,flag=1):
     支持是否写入日志记录的选择               
                                     
     Args:
-        msgs: 存储要发送的内容的列表，且该列表的每个元素为列表，
-            列表元素中的元素必须按照[标题,时间,链接]的顺序，例如：
-            [['关于xxx的通知','2017-03-10','http://xxxx.com'],['关于xxx的通知','2017-03-10','http://xxxx.com']]
+        msgs: 存储要发送的内容的列表，且该列表的每个元素为字典，
+            列表元素中的字典必须包含三个键值对,且key必须为'title','link','date'，
+            例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'},
+        {'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'}]
         subject: 要发送的邮件主题
         send_number: 短信接收者的手机号码
         to_addr_str: 收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串

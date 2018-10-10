@@ -4,7 +4,7 @@ Created on Mar 8, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.2
+@version: 0.2.0
 '''
 import time
 import os
@@ -25,8 +25,7 @@ def Log_Write(subject, log_txt, flag=1):
     
     Args:
         subject: 生成的日志文件的文件名前缀，以及输出时显示在单条日志信息前的对日志类型的描述
-        log_txt: 不带时间信息的日志内容，类型可以为字符串，每个元素均为字符串的列表，
-            每个元素均为列表(该列表中每个元素要求为字符串)的列表
+        log_txt: 不带时间信息的日志内容，类型可以为字符串，每个元素均为列表(该列表中每个元素要求为字符串)的列表
         flag: 一个可选变量，决定是否在输出设备输出日志信息，默认为1(输出)
         
     Returns:

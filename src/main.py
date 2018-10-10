@@ -5,7 +5,7 @@ Created on Mar 8, 2018
 
 @author: QiZhao
 @license: GNU GPLv3
-@version: 0.1.7
+@version: 0.2.0
 '''
 from spider import Spider
 import time
