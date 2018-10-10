@@ -1,4 +1,5 @@
 # encoding='utf-8' 
+import twilio
 '''
 Created on Mar 7, 2018
 
@@ -50,9 +51,8 @@ def Send_sms(send_number, msg):
         except ConnectionError:
 #             print('发送失败，请检查你的账号是否有效或网络是否良好！')
             log_send_sms += send_number + ' ' + '短信发送失败，请检查你的账号是否有效或网络是否良好!'
-        except base.exceptions.TwilioRestException:
+        except twilio.base.exceptions.TwilioRestException:
             log_send_sms+=send_number+' '+'短信发送失败,手机号码尚未经过验证，请联系作者进行验证!'
-    log_send_sms+='\n'
     return log_send_sms
     
 def Send_email(txt, to_addr_str, subject):
@@ -89,16 +89,14 @@ def Send_email(txt, to_addr_str, subject):
     try:
         smtp.sendmail(from_addr, to_addr_list, msg.as_string())
 #         print('邮件发送成功！')
-        log_send_email = to_addr_str[0:-1]+' 邮件发送成功！' + '\n'
+        log_send_email = to_addr_str[0:-1]+' 邮件发送成功！'
     except ConnectionError:
 #         print('发送失败，请检查你的账号是否有效或网络是否良好！')
-        log_send_email = to_addr_str[0:-1] + ' ' + '邮件发送失败，请检查你的账号是否有效或网络是否良好！' + '\n'
+        log_send_email = to_addr_str[0:-1] + ' ' + '邮件发送失败，请检查你的账号是否有效或网络是否良好！'
      
     smtp.quit()
     return log_send_email
-     
-    smtp.quit()
-    return log_send_email
+
 
 
 def Send(msgs, subject, send_number,to_addr_str,flag=1):
@@ -122,14 +120,14 @@ def Send(msgs, subject, send_number,to_addr_str,flag=1):
 #     log_send=['test\n']    # Only for test
 
     for msg in msgs:
-        temp = subject + '有新通知了,快去看看吧' + '\n' + '标题:' + msg[0]\
-         + '\n' + '时间:' + msg[1] + '\n' + '查看:' + msg[2]
-        log_send_sms = Send_sms(send_number, temp)
-        log_send_email = Send_email(temp, to_addr_str, subject + '更新通知')
+        temp = subject + '有新通知了,快去看看吧' + '\n' + '标题:' + msg['title']\
+         + '\n' + '时间:' + msg['date'] + '\n' + '查看:' + msg['link']
+        log_send_sms=[]
+        log_send_email=[]
+        log_send_sms.append(Send_sms(send_number, temp))
+        log_send_email.append(Send_email(temp, to_addr_str, subject + '更新通知'))
   
-        if(flag == 1):
-            log_send.append(log_send_sms)
-            log_send.append(log_send_email)
+        log_send.append(log_send_sms)
+        log_send.append(log_send_email)
     if(flag == 1):
         Log_Write('Send', log_send)
-#     return msgs

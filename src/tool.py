@@ -6,62 +6,9 @@ Created on Mar 8, 2018
 @license: GNU GPLv3
 @version: 0.1.2
 '''
-import re
 import time
 import os
 
-def Get_new_message(txt_before, txt, split_rule):
-    '''
-    按照split_rule提供的正则表达式规则将两个字符串文本中分为三个分组，
-    然后对比两个findall函数返回的两个列表中的每个元组元素，
-    找到不存在于第一个列表中的元组，并将该元组转换为列表，
-    加入到一个列表中，返回一个每个元素都为列表的列表。
-    
-    Args:
-        txt_before: 旧文本字符串
-        txt: 新文本字符串
-        split_rule: 表示正则表达式规则的字符串,限制为三个分组
-        
-    Returns:
-        msgs: 由新增内容组成的列表
-        例如：[['a','1','一'],['b','2','二'],['c','3','三']]。
-        
-    '''
-    pattern = re.compile(split_rule, re.S)
-    items_txt_before = re.findall(pattern, txt_before)
-    items_txt = re.findall(pattern, txt)
-    msgs = []
-    
-    for item in items_txt:
-        if item not in items_txt_before:
-            temp = []
-            temp.append(item[0])
-            temp.append(item[1])
-            temp.append(item[2])
-            msgs.append(temp)
-    return  msgs
-
-
-def Compare(txt, txt_before):
-    '''
-    比较两个字符串，依据比对结果，返回不同的状态值
-    
-    Args:
-        txt: sad
-        txt_before: dsa
-        
-    Returns:
-        status: 返回状态值
-    '''
-    if txt_before == '':
-        status = -1
-    elif txt == txt_before:
-        status = 0
-    else:
-        status = 1
-    return status
-
-        
 def time_text():
     '''
     Returns:
@@ -89,22 +36,14 @@ def Log_Write(subject, log_txt, flag=1):
 
     file_name = 'Log\\' + subject + '_log.log'
     file = open(file_name, 'a', encoding='utf-8')  # 以“附加写”的方式打开文件
-#     print(log_txt)
     log_show = ''
     log_return = []
     if(type(log_txt) == str):  # 处理第一次爬取或无新通知时的日志的写入
-#         log_txt.encode('utf-8')
         temp = time_text() + ' ' + log_txt
         log_show = subject + ':' + temp
         log_return.append(temp)
         file.write(temp)
-    elif type(log_txt[0]) == str:  # 处理发送更新提醒后日志的写入
-        for log in log_txt:
-            temp = time_text() + ' ' + log
-            log_show += subject + ':' + temp
-            file.write(temp)
-            log_return.append(temp)
-    else:  # 处理有更新信息时的日志的写入
+    elif type(log_txt) == list:  # 处理发送更新提醒后日志的写入,处理有更新信息时的日志的写入
         for log in log_txt:
             temp = time_text() + ' ' + ' '.join(log) + '\n'
             file.write(temp)
