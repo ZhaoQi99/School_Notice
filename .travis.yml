@@ -1,6 +1,13 @@
 language: python
+sudo: true
 python:
   - "3.6"
 install:
   - pip install twilio
-script: true
+script: 
+  - cp src/* test/
+  - cd test
+  - python test_spider.py
+  - python test_spider.py
+  - python test_tool.py
+  - python test_tool.py
