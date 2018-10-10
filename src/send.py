@@ -82,7 +82,7 @@ def Send_email(txt, to_addr_str, subject):
     to_addr_list = to_addr_str.split(',')  # ['example1@qq.com','example2@qq.com']
     
     smtp = smtplib.SMTP_SSL() 
-    smtp.connect('smtp.qq.com', 465)  # 一般端口为25,QQ邮箱端口为465
+    smtp.connect(configs.EMAIL_SERVER,configs.EMAIL_PORT)  # 一般端口为25,QQ邮箱端口为465
     smtp.login(from_addr, password)
     
     log_send_email = ''

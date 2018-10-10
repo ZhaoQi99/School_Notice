@@ -21,6 +21,8 @@ TWILIO_NUMBER = ''
 # send_email config
 FROM_ADDR = ""
 PASSWORD = ""
+EMAIL_PORT=0
+EMAIL_SERVER=''
 
 # spider config
 SPIDER_CONFIG = [
