@@ -64,9 +64,9 @@ def main():
         for dic  in configs.SPIDER_CONFIG:
             try:
                 status, new_data = Spider(dic['url'], dic['url_main'], dic['rule'], dic['subject_CN'],
-                        dic['subject_EN'], dic['coding'])
+                        dic['subject_EN'], dic['coding'],configs.LOG_ENABLED)
                 if status >= 1:
-                    send.Send(new_data, dic['subject_CN'], send_number, to_addr_str)
+                    send.Send(new_data, dic['subject_CN'], send_number, to_addr_str,configs.LOG_ENABLED)
             except Exception as e:
                 print('Exception: ', e)
                 Error_log = '异常信息如下:\n' + format_exc() + '-' * 70 + '\n'

@@ -99,7 +99,7 @@ def Send_email(txt, to_addr_str, subject):
     return log_send_email
 
 
-def Send(msgs, subject, send_number, to_addr_str, flag=1):
+def Send(msgs, subject, send_number, to_addr_str, flag=True):
     '''
     向手机号码为send_number的人发送通知信息
     向to_addr_str中的邮箱地址发送主题为subject的通知信息
@@ -114,7 +114,7 @@ def Send(msgs, subject, send_number, to_addr_str, flag=1):
         send_number: 短信接收者的手机号码
         to_addr_str: 收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串
             例如：'example@qq.com','example1@qq.com,example2@qq.com'
-        flag: 一个可选变量，用来决定是否在发送日志中记录此次发送信息，默认为1(记录)
+        flag: 一个可选变量，用来决定是否在发送日志中记录此次发送信息，默认为True(记录)
     '''
     temp = ''
     log_send = []
@@ -130,5 +130,5 @@ def Send(msgs, subject, send_number, to_addr_str, flag=1):
   
         log_send.append(log_send_sms)
         log_send.append(log_send_email)
-    if(flag == 1):
+    if(flag == True):
         Log_Write('Send', log_send)

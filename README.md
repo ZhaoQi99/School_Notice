@@ -15,7 +15,7 @@
 - [x] 通知更新邮件提醒
 - [x] 多人同时进行提醒
 - [x] 发送日志、更新检查日志 
-- [ ] 日志功能可选
+- [x] 日志功能可选
 - [ ] 每个用户要提醒的部门可选
 - [ ] 数据库存储
 
@@ -58,6 +58,11 @@ AUTHOR_NAME = ''
 AUTHOR_EMAIL = ''
 ```
 
+### Log Config
+是否在日志文件中记录日志，默认为True
+```
+LOG_ENABLED = True
+```
 ### Spider Config
 爬虫的相关配置，包括:部门类型(EN)，部门类型(CN)中，"更多通知"页的链接，链接的公共部分，正则表达式，网页编码格式
 subject_EN：数据文件的文件名
@@ -86,9 +91,11 @@ SPIDER_CONFIG = [
   ]
 ```
 这里有一个爬虫配置的例子:
-### Examples
+#### Example
 ```python
-SPIDER_CONFIG = [{'subject_EN':'snnu_index', 'subject_CN':'师大主页', 'url': 'http://www.snnu.edu.cn/tzgg.htm', 'url_main' : 'http://www.snnu.edu.cn/info/1085/',
+SPIDER_CONFIG = [
+{
+'subject_EN':'snnu_index', 'subject_CN':'师大主页', 'url': 'http://www.snnu.edu.cn/tzgg.htm', 'url_main' : 'http://www.snnu.edu.cn/info/1085/',
  'rule' : 'info/1085/(?P<link>\d+\.htm)" target="_blank">(?P<title>[\s\S]{5,100})（(?P<date>\d*-\d*-\d*)）','coding':'utf-8'},
 {'subject_EN':'snnu_css', 'subject_CN':'计科院主页', 'url': 'http://ccs.snnu.edu.cn/tzgg.htm', 'url_main' : 'http://ccs.snnu.edu.cn/'
 , 'rule' : '<a target="_blank" href="(?P<link>[^"]*)">(?P<title>[^( </)]*)[^"]*"[^>]*>(?P<date>\d*-\d*-\d*)','coding':'utf-8'},

@@ -125,7 +125,7 @@ def Log_generate(status, data, subject_CN):
     return log_txt
 
 
-def Spider(url, url_main, rule, subject_CN, subject_EN, coding, flag=1):
+def Spider(url, url_main, rule, subject_CN, subject_EN, coding, flag=True):
     '''
     爬取url的源码，并从中按照rule提供的正则表达式规则提取有用信息，并对数据进行处理，
     生成通知提醒的内容，在subject_EN+'_log.md'文件中记录日志，
@@ -139,7 +139,7 @@ def Spider(url, url_main, rule, subject_CN, subject_EN, coding, flag=1):
         rule: 表示正则表达式规则的字符串,限制为三个分组，用于从源码中提取信息
         subject_CN: 抓取的网站类型
         subject_EN: 生成的日志文件的文件名前缀，数据文件的文件名，以及输出时显示在单条日志信息前的对日志类型的描述
-        flag: 一个可选变量，用来决定是否在日志中记录此次检查的结果，默认为1(记录)
+        flag: 一个可选变量，用来决定是否在日志中记录此次检查的结果，默认为True(记录)
         
     Returns:
         status: 检查更新的状态码
@@ -151,7 +151,7 @@ def Spider(url, url_main, rule, subject_CN, subject_EN, coding, flag=1):
     status, new_data = Data_processing(subject_EN, data_use, url_main)
     
     log_txt = Log_generate(status, new_data, subject_CN)
-    if flag == 1:
+    if flag == True:
         tool.Log_Write(subject_EN, log_txt)
     return status, new_data
     

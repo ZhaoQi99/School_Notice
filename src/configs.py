@@ -24,6 +24,9 @@ PASSWORD = ""
 EMAIL_PORT = 0
 EMAIL_SERVER = ''
 
+# Log Config
+LOG_ENABLED = True
+
 # spider config
 SPIDER_CONFIG = [
 {

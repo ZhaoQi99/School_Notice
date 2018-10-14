@@ -7,6 +7,7 @@ from spider import *
 from traceback import format_exc
 from tool import *
 from test_configs import *
+from configs import LOG_ENABLED
 
 
 def test_re_group():
@@ -65,7 +66,7 @@ def test_Spider():
     for dic  in spider_list:
         try:
             status, data = Spider(dic['url'], dic['url_main'], dic['rule'], dic['subject_CN'],
-                    dic['subject_EN'], dic['coding'])
+                    dic['subject_EN'], dic['coding'],LOG_ENABLED)
             print(status)
             print(data)
         except Exception as e:
