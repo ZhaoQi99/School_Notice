@@ -12,6 +12,7 @@ import smtplib
 from tool import Log_Write
 import configs
 
+
 def Send_sms(send_number, msg):
     '''
     向手机号码为send_number的人发送内容为msg的短信
@@ -37,12 +38,12 @@ def Send_sms(send_number, msg):
 
     log_send_sms = ''
     client = Client(account_sid, auth_token)
-    send_number_list = send_number.split(',')   # 多个号码的发送
+    send_number_list = send_number.split(',')  # 多个号码的发送
     for send_number in send_number_list: 
         try:
             # 修复由于最后一个元素的结尾多出一个换行导致的日志记录混乱的问题
-            if(send_number==send_number_list[-1]):
-                send_number=send_number[0:-1]
+            if(send_number == send_number_list[-1]):
+                send_number = send_number[0:-1]
 #                print(send_number)
             client.messages.create(to=send_number, from_=twilio_number, body=msg)
 #             print('短信已经发送！')
@@ -51,8 +52,9 @@ def Send_sms(send_number, msg):
 #             print('发送失败，请检查你的账号是否有效或网络是否良好！')
             log_send_sms += send_number + ' ' + '短信发送失败，请检查你的账号是否有效或网络是否良好!'
         except twilio.base.exceptions.TwilioRestException:
-            log_send_sms+=send_number+' '+'短信发送失败,手机号码尚未经过验证，请联系作者进行验证!'
+            log_send_sms += send_number + ' ' + '短信发送失败,手机号码尚未经过验证，请联系作者进行验证!'
     return log_send_sms
+
     
 def Send_email(txt, to_addr_str, subject):
     '''
@@ -71,7 +73,7 @@ def Send_email(txt, to_addr_str, subject):
             'example1@qq.com,example2@qq.com 邮件发送成功！'
     '''
     from_addr = configs.FROM_ADDR  # 发件人的邮件地址
-    password = configs.PASSWORD # 非QQ密码，应为SMTP服务授权码，可在QQ邮件设置的账户选项中获取
+    password = configs.PASSWORD  # 非QQ密码，应为SMTP服务授权码，可在QQ邮件设置的账户选项中获取
     
     msg = MIMEText(txt)
     msg['Subject'] = subject  # 邮件主题
@@ -81,14 +83,14 @@ def Send_email(txt, to_addr_str, subject):
     to_addr_list = to_addr_str.split(',')  # ['example1@qq.com','example2@qq.com']
     
     smtp = smtplib.SMTP_SSL() 
-    smtp.connect(configs.EMAIL_SERVER,configs.EMAIL_PORT)  # 一般端口为25,QQ邮箱端口为465
+    smtp.connect(configs.EMAIL_SERVER, configs.EMAIL_PORT)  # 一般端口为25,QQ邮箱端口为465
     smtp.login(from_addr, password)
     
     log_send_email = ''
     try:
         smtp.sendmail(from_addr, to_addr_list, msg.as_string())
 #         print('邮件发送成功！')
-        log_send_email = to_addr_str[0:-1]+' 邮件发送成功！'
+        log_send_email = to_addr_str[0:-1] + ' 邮件发送成功！'
     except ConnectionError:
 #         print('发送失败，请检查你的账号是否有效或网络是否良好！')
         log_send_email = to_addr_str[0:-1] + ' ' + '邮件发送失败，请检查你的账号是否有效或网络是否良好！'
@@ -97,8 +99,7 @@ def Send_email(txt, to_addr_str, subject):
     return log_send_email
 
 
-
-def Send(msgs, subject, send_number,to_addr_str,flag=1):
+def Send(msgs, subject, send_number, to_addr_str, flag=1):
     '''
     向手机号码为send_number的人发送通知信息
     向to_addr_str中的邮箱地址发送主题为subject的通知信息
@@ -122,8 +123,8 @@ def Send(msgs, subject, send_number,to_addr_str,flag=1):
     for msg in msgs:
         temp = subject + '有新通知了,快去看看吧' + '\n' + '标题:' + msg['title']\
          + '\n' + '时间:' + msg['date'] + '\n' + '查看:' + msg['link']
-        log_send_sms=[]
-        log_send_email=[]
+        log_send_sms = []
+        log_send_email = []
         log_send_sms.append(Send_sms(send_number, temp))
         log_send_email.append(Send_email(temp, to_addr_str, subject + '更新通知'))
   

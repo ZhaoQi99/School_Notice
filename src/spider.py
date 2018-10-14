@@ -10,6 +10,7 @@ import urllib.request
 import re
 import tool
 
+
 def Spider_data(url, rule, coding='utf-8'):
     '''
     爬取url的源码，并从中按照rule提供的正则表达式规则提取有用分组
@@ -32,6 +33,7 @@ def Spider_data(url, rule, coding='utf-8'):
         data_use.append(i.groupdict())
     return data_use
 
+
 def Data_processing(subject_EN, data, url_main):
     '''
     读取数据文件,并将新抓取的通知信息中的链接部分处理为长链接,
@@ -53,7 +55,7 @@ def Data_processing(subject_EN, data, url_main):
     
     # 处理为长网址
     for item_dict in data:
-        item_dict['link']=url_main+item_dict['link']
+        item_dict['link'] = url_main + item_dict['link']
     
     file = 'Data/' + subject_EN + '.md'
     tool.Mkfile(file)  # 初次抓取时新建数据文件
@@ -62,24 +64,24 @@ def Data_processing(subject_EN, data, url_main):
     f_before.close()
         
     # 收集所有的link信息
-    all_link=[]
-    split_rule='(?P<title>[^ ]*) (?P<date>\d*-\d*-\d*) (?P<link>[^\n]*)\n'
+    all_link = []
+    split_rule = '(?P<title>[^ ]*) (?P<date>\d*-\d*-\d*) (?P<link>[^\n]*)\n'
     pattern = re.compile(split_rule, re.S)
-    data_before = pattern.finditer( txt_before)
+    data_before = pattern.finditer(txt_before)
     for item in data_before:
-        dic=item.groupdict()
+        dic = item.groupdict()
         all_link.append(dic['link'])
 
     # 生成新数据
-    status=0 # 是否有新通知的标志
-    new_data=[]
+    status = 0  # 是否有新通知的标志
+    new_data = []
     for item in data:
         if item['link'] not in all_link:
-            item['date']=item['date'].replace('/','-')# 将日期统一转换为yy-mm-dd格式
-            status+=1
+            item['date'] = item['date'].replace('/', '-')  # 将日期统一转换为yy-mm-dd格式
+            status += 1
             new_data.append(item)
-    if len(txt_before)==0:# 首次抓取
-        status=-1
+    if len(txt_before) == 0:  # 首次抓取
+        status = -1
             
     # 将新抓取到的通知信息写入数据文件
     f_temp = open(file, 'ab')  
@@ -89,9 +91,10 @@ def Data_processing(subject_EN, data, url_main):
         f_temp.write(" ".encode('utf-8') + item['link'].encode('utf-8'))
         f_temp.write("\n".encode('utf-8'))
     f_temp.close()
-    return status,new_data
+    return status, new_data
 
-def Log_generate(status,data,subject_CN):
+
+def Log_generate(status, data, subject_CN):
     '''
     依据检查更新的结果，生成不同的日志内容，并返回日志内容
     
@@ -114,14 +117,15 @@ def Log_generate(status,data,subject_CN):
     else:
         log_txt = []
         for dic in data:
-            temp=[]
+            temp = []
             temp.append(dic['title'])
             temp.append(dic['link'])
             temp.append(dic['date'])
             log_txt.append(temp)
     return log_txt
 
-def Spider(url, url_main, rule, subject_CN, subject_EN,coding,flag=1):
+
+def Spider(url, url_main, rule, subject_CN, subject_EN, coding, flag=1):
     '''
     爬取url的源码，并从中按照rule提供的正则表达式规则提取有用信息，并对数据进行处理，
     生成通知提醒的内容，在subject_EN+'_log.md'文件中记录日志，
@@ -143,14 +147,11 @@ def Spider(url, url_main, rule, subject_CN, subject_EN,coding,flag=1):
             例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'},
         {'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'}]
     '''
-    data_use = Spider_data(url, rule,coding)
-    status,new_data= Data_processing(subject_EN, data_use, url_main)
+    data_use = Spider_data(url, rule, coding)
+    status, new_data = Data_processing(subject_EN, data_use, url_main)
     
-    log_txt = Log_generate(status,new_data,subject_CN)
+    log_txt = Log_generate(status, new_data, subject_CN)
     if flag == 1:
         tool.Log_Write(subject_EN, log_txt)
-    return status,new_data
-
-        
-
+    return status, new_data
     

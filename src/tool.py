@@ -9,6 +9,7 @@ Created on Mar 8, 2018
 import time
 import os
 
+
 def time_text():
     '''
     Returns:
@@ -54,7 +55,8 @@ def Log_Write(subject, log_txt, flag=1):
         print(log_show, end='')
     return log_return
 
-def Mkdir(dir_name,flag=1):
+
+def Mkdir(dir_name, flag=1):
     '''
     获取到当前文件所在的目录，并检查是否有'dir_name'文件夹，
     如果不存在则自动新建'dir_name'文件夹
@@ -64,12 +66,13 @@ def Mkdir(dir_name,flag=1):
         flag: 一个可选变量，决定是否在输出设备输出日志信息，默认为1(输出)
     '''
     
-    File_Path = os.getcwd()+'/'+dir_name+'/'
+    File_Path = os.getcwd() + '/' + dir_name + '/'
     if not os.path.exists(File_Path):
         os.makedirs(File_Path)
-        Log_Write('新建文件夹', File_Path+'\n', flag)
+        Log_Write('新建文件夹', File_Path + '\n', flag)
 
-def Mkfile(fname,flag=1):
+
+def Mkfile(fname, flag=1):
     '''
     检查当前路径下是否存在'fname'文件，
     如果不存在则自动新建'fname'文件
@@ -78,10 +81,9 @@ def Mkfile(fname,flag=1):
         fname: 文件名，类型为字符串
         flag: 一个可选变量，决定是否在输出设备输出日志信息，默认为1(输出)
     '''
-    fname=os.getcwd()+'/'+fname
+    fname = os.getcwd() + '/' + fname
     if not os.path.exists(fname):
-        fobj=open(fname,'w')
+        fobj = open(fname, 'w')
         fobj.close()
-        Log_Write('新建文件', fname+'\n', flag)
-
+        Log_Write('新建文件', fname + '\n', flag)
         
