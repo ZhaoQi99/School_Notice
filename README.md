@@ -1,4 +1,8 @@
+<div align="right">Language: :us:
+<a title="Chinese" href="README.zh-CN.md">:cn:</a></div>
+
 # School_Notice
+
 ---
 
 [![Build Status](https://travis-ci.org/ZhaoQi99/School_Notice.svg?branch=master)](https://travis-ci.org/ZhaoQi99/School_Notice)
@@ -7,34 +11,34 @@
 [![GitHub forks](https://img.shields.io/github/forks/ZhaoQi99/School_Notice.svg)](https://github.com/ZhaoQi99/School_Notice/network)
 [![GitHub stars](https://img.shields.io/github/stars/ZhaoQi99/School_Notice.svg)](https://github.com/ZhaoQi99/School_Notice/stargazers) 
 
-## 简介
-应用Python对校园各类网站的通知更新进行短信，邮件提醒。
+## Introduction
+An application of using python to check notifications update for various campus website,and send SMS reminder,email reminder.
 
-## 功能
-- [x] 通知更新短信提醒
-- [x] 通知更新邮件提醒
-- [x] 多人同时进行提醒
-- [x] 发送日志、更新检查日志 
-- [x] 日志功能可选
-- [ ] 每个用户要提醒的部门可选
-- [ ] 数据库存储
+## features
+- [x] Notification update SMS reminder
+- [x] Notification update email reminder
+- [x] Simultaneous reminders for multiple people
+- [x] Send log、check udate log 
+- [x] log function optional
+- [ ] The department which each user need to be reminded is optional
+- [ ] Database storage
 
-## 依赖项
+## Dependencies
 * [Python](http://www.python.org/)
 * `pip install twilio`
 
-## 使用脚本
-1. 使用命令克隆项目至本地
+## Using script
+1. Using command to clone the the repository to local folder
 `git clone https://github.com/ZhaoQi99/School_Notice.git`
-2. 申请[Twilio](https://www.twilio.com/)免费试用账号
-3. 编辑`configs.py`文件，修改配置文件。
-4. 运行`main.py`文件
+2. Apply for [Twilio](https://www.twilio.com/) Free trial account
+3. Edit the ' configs.py ' file to modify the configuration file.
+4. Run the ' main.py ' file
 
-## 配置
-您可以 (应该) 修改以下几个设置，如果不需要使用Twilio/邮件提醒功能，请保持默认。
+## Configuration
+You can (and should) modify a couple of settings. if you do not need to use the twilio/Mail reminder feature, keep the default.
 
 ### Send Email Config
-依次填入发件人邮箱地址，密码，发送端口，发送邮件的smtp服务器地址
+Fill in the sender's e-mail address, password, port, and SMTP server address in turn
 ```
 FROM_ADDR = ""
 PASSWORD = ""
@@ -42,7 +46,7 @@ EMAIL_PORT = 0
 EMAIL_SERVER = ''
 ```
 ### Twillo Config
-在Twilio账号的个人信息页，可以找到以下几个参数
+The following parameters can be found on the personal information page of the Twilio account.
 ```
 ACCOUNT_ID = ''
 AUTH_TOKEN = ''
@@ -50,7 +54,7 @@ TWILIO_NUMBER = ''
 ```
 
 ### Show Config
-在窗口中显示的内容，包括：学校姓名，脚本版本，作者姓名，作者邮箱
+Content which is displayed in the window，including: school Name, script version, author name, author email
 ```
 SCHOOL_NAME = ''
 VERSION = ''
@@ -59,17 +63,16 @@ AUTHOR_EMAIL = ''
 ```
 
 ### Log Config
-是否在日志文件中记录日志，默认为True
+Whether logs can be logged in the log file, which is true by default
 ```
 LOG_ENABLED = True
 ```
 ### Spider Config
-爬虫的相关配置，包括:部门类型(EN)，部门类型(CN)中，"更多通知"页的链接，链接的公共部分，正则表达式，网页编码格式
-subject_EN：数据文件的文件名
-subject_CN：用于在日志、邮件标题中显示
-**警告:正则表达式中必须有三个分组，且名称必须为`link,date,title`**
-如:`info/1085/(?P<link>\d+\.htm)" target="_blank">(?P<title>[\s\S]{5,100})（(?P<date>\d*-\d*-\d*)）`
-
+Crawler  configuration，including: department type (EN), department type (CN),  "more notifications " page link, link public part, regular expression, Web page encoding format
+subject_ENf: File name of data file
+subject_CN： Used to display in logs, message headers
+**Warning: There must be three groups in the regular expression, which11 the name must be ' link,date,title ' `**
+Such as:`info/1085/(?P<link>\d+\.htm)" target="_blank">(?P<title>[\s\S]{5,100})（(?P<date>\d*-\d*-\d*)）`
 ```python
 SPIDER_CONFIG = [
 {
@@ -90,7 +93,7 @@ SPIDER_CONFIG = [
 }
   ]
 ```
-这里有一个爬虫配置的例子:
+Here is an example about crawler configuration:
 #### Example
 ```python
 SPIDER_CONFIG = [
@@ -106,17 +109,17 @@ SPIDER_CONFIG = [
 {'subject_EN':'snnu_lib', 'subject_CN':'图书馆主页', 'url': 'http://www.lib.snnu.edu.cn/action.do?webid=w-d-bggg-l', 'url_main' :  'http://www.lib.snnu.edu.cn/action.do?webid=w-l-showmsg&gtype=a&pid=',
  'rule' :  'pid=(?P<link>\d*)[\s\S]{20,57}>(?P<title>[^<]*)</[af][\S\s]{18,70}(?P<date>\d{4}-\d*-\d*)','coding':'utf-8'}]
 ```
-## 打包exe(Windows)
-1. 安装pywin32
+## Packaging exe(Windows)
+1. Install  pywin32
 `pip install pywin32`
-2. 安装Pyinstaller
+2.  Install Pyinstaller
 `pip install PyInstaller`
-3. (可选)移动程序图标至当前文件夹，命名为`logo.ico`
-4. 使用`pyinstaller`打包程序
-`pyinstaller -F main.py`或者`pyinstaller -F -i logo.ico main.py`
-5. 进入dist文件夹，可以看到main.exe
+3. (optional)Move the program icon to the current folder, renamed ' Logo.ico 
+4.  Using `pyinstaller` package program
+`pyinstaller -F main.py`Or`pyinstaller -F -i logo.ico main.py`
+5. Go to the Dist folder and you can see the Main.exe
 `cd dist`
 
-## 开源协议 & 作者
-* 作者:Qi Zhao([zhaoqi99@outlook.com](mailto:zhaoqi99@outlook.com))
-* 开源协议:[GNU General Public License v3.0](https://github.com/ZhaoQi99/School_Notice/blob/master/LICENSE)
+## License & Author
+* Author:Qi Zhao([zhaoqi99@outlook.com](mailto:zhaoqi99@outlook.com))
+* License:[GNU General Public License v3.0](https://github.com/ZhaoQi99/School_Notice/blob/master/LICENSE)
