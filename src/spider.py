@@ -1,4 +1,4 @@
-# encoding='utf-8' 
+# encoding='utf-8'
 '''
 Created on Mar 7, 2018
 
@@ -17,13 +17,13 @@ def Spider_data(url, rule, coding='utf-8'):
     Args:
         url: 要爬取的页面的统一资源定位符
         rule: 表示正则表达式规则的字符串,限制为三个分组
-        
+
     Returns:
         data_use: 存储经正则表达式匹配后的有用信息的列表，且该列表每个元素为字典
         例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'id=5'},
         {'title':'关于xxx的通知','date':'2017-03-10','link':'id=5'}]
     '''
-    
+
     response = urllib.request.urlopen(url)
     data = response.read().decode(coding)
     pattern = re.compile(rule, re.S)
@@ -39,7 +39,7 @@ def Data_processing(subject_EN, data, url_main):
     读取数据文件,并将新抓取的通知信息中的链接部分处理为长链接,
     然后以通知链接为参照,与数据文件中的数据进行对比，并将新通知的以附加写的形式写入数据文件,
     返回检查更新的状态码与处理后的数据
-    
+
     Args:
         subject_EN: 生成的数据文件的文件名
         data: 存储通知主要内容的列表，且该列表每个元素为字典
@@ -52,17 +52,17 @@ def Data_processing(subject_EN, data, url_main):
             例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'},
         {'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com‘}]
     '''
-    
+
     # 处理为长网址
     for item_dict in data:
         item_dict['link'] = url_main + item_dict['link']
-    
+
     file = 'Data/' + subject_EN + '.md'
     tool.Mkfile(file)  # 初次抓取时新建数据文件
     f_before = open(file, 'rb')  # 读取数据文件中的通知信息
     txt_before = f_before.read().decode('utf-8')
     f_before.close()
-        
+
     # 收集所有的link信息
     all_link = []
     split_rule = '(?P<title>[^ ]*) (?P<date>\d*-\d*-\d*) (?P<link>[^\n]*)\n'
@@ -82,9 +82,9 @@ def Data_processing(subject_EN, data, url_main):
             new_data.append(item)
     if len(txt_before) == 0:  # 首次抓取
         status = -1
-            
+
     # 将新抓取到的通知信息写入数据文件
-    f_temp = open(file, 'ab')  
+    f_temp = open(file, 'ab')
     for item in new_data:
         f_temp.write(item['title'].encode('utf-8'))
         f_temp.write(" ".encode('utf-8') + item['date'].encode('utf-8'))
@@ -97,14 +97,14 @@ def Data_processing(subject_EN, data, url_main):
 def Log_generate(status, data, subject_CN):
     '''
     依据检查更新的结果，生成不同的日志内容，并返回日志内容
-    
+
     Args:
         data:存储通知提醒主要内容的列表，且该列表每个元素为字典
         例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'},
         {'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'}]
         subject_CN: 抓取的网站类型
         status: 检查更新的状态码
-        
+
     Returns:
         log_txt: 日志的主要内容，类型为字符串或每个元素均为列表的列表，且元素列表的元素均为字符串。
         例如:'首次抓取师师大主页！\n','师大主页暂无新通知！\n'
@@ -132,7 +132,7 @@ def Spider(url, url_main, rule, subject_CN, subject_EN, coding, flag=True):
     返回检查更新的状态码，以及通知提醒的内容
     若无新通知，则通知提醒的内容为空
     支持选择是否将此次检查更新的结果写入日志
-    
+
     Args:
         url: 要爬取的页面的统一资源定位符
         url_main: 单条通知的url的公共部分
@@ -140,7 +140,7 @@ def Spider(url, url_main, rule, subject_CN, subject_EN, coding, flag=True):
         subject_CN: 抓取的网站类型
         subject_EN: 生成的日志文件的文件名前缀，数据文件的文件名，以及输出时显示在单条日志信息前的对日志类型的描述
         flag: 一个可选变量，用来决定是否在日志中记录此次检查的结果，默认为True(记录)
-        
+
     Returns:
         status: 检查更新的状态码
         new_data: 存取通知提醒的主要内容，类型每个元素均为字典的列表
@@ -149,9 +149,8 @@ def Spider(url, url_main, rule, subject_CN, subject_EN, coding, flag=True):
     '''
     data_use = Spider_data(url, rule, coding)
     status, new_data = Data_processing(subject_EN, data_use, url_main)
-    
+
     log_txt = Log_generate(status, new_data, subject_CN)
     if flag == True:
         tool.Log_Write(subject_EN, log_txt)
     return status, new_data
-    

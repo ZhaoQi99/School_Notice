@@ -1,4 +1,4 @@
-﻿# encoding='utf-8' 
+﻿# encoding='utf-8'
 import configs
 '''
 Created on Mar 8, 2018
@@ -20,11 +20,11 @@ def Init():
     Mkdir('Log')
     Mkdir('Data')
     Mkfile('Log/' + 'Exception_log.log')
-    
+
     File_Path = os.getcwd() + '\\Data\\user.md'
     if not os.path.exists(File_Path):  # 不存在user.md文件
         Mkfile('Data/' + 'user.md')
-        
+
         f_obj = open(File_Path, 'w')
         print('请输入短信接受者的电话号码(加国际区号,多个电话号码之间以,分隔),如:+8615012345678')
         send_number = input()
@@ -35,7 +35,7 @@ def Init():
         f_obj.write('\n')
         f_obj.write(to_addr_str)
         f_obj.write('\n')
-        f_obj.write(time_interval)        
+        f_obj.write(time_interval)
         f_obj.close()
 
 
@@ -49,8 +49,8 @@ def Show_right():
     input()
     print('---------------------------------------------------')
     print(configs.SCHOOL_NAME + '校园通知自动提醒程序启动!')
-    
-    
+
+
 def main():
     Show_right()
     Init()
@@ -59,14 +59,15 @@ def main():
     to_addr_str = f_obj.readline()
     time_interval = (int)(f_obj.readline())
     f_obj.close()
-    
+
     while(True):
-        for dic  in configs.SPIDER_CONFIG:
+        for dic in configs.SPIDER_CONFIG:
             try:
                 status, new_data = Spider(dic['url'], dic['url_main'], dic['rule'], dic['subject_CN'],
-                        dic['subject_EN'], dic['coding'],configs.LOG_ENABLED)
+                                          dic['subject_EN'], dic['coding'], configs.LOG_ENABLED)
                 if status >= 1:
-                    send.Send(new_data, dic['subject_CN'], send_number, to_addr_str,configs.LOG_ENABLED)
+                    send.Send(new_data, dic[
+                              'subject_CN'], send_number, to_addr_str, configs.LOG_ENABLED)
             except Exception as e:
                 print('Exception: ', e)
                 Error_log = '异常信息如下:\n' + format_exc() + '-' * 70 + '\n'

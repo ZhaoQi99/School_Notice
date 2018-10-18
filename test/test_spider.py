@@ -20,7 +20,7 @@ def test_re_group():
     for mm in m:
         print(mm.groupdict())
 
-        
+
 def test_Spider_data_1():
     url = 'http://www.lib.snnu.edu.cn/action.do?webid=w-d-bggg-l'
     rule = 'pid=(?P<link>\d*)[\s\S]{20,57}>(?P<title>[^<]*)</[af][\S\s]{18,70}(?P<date>\d{4}-\d*-\d*)'
@@ -58,15 +58,15 @@ def test_spider_config():
     for dic in SPIDER_CONFIG:
         print(dic)
         for key in dic:
-            print(key + ':' + dic[key] + ',', end='') 
+            print(key + ':' + dic[key] + ',', end='')
 
 
 def test_Spider():
     spider_list = SPIDER_CONFIG
-    for dic  in spider_list:
+    for dic in spider_list:
         try:
             status, data = Spider(dic['url'], dic['url_main'], dic['rule'], dic['subject_CN'],
-                    dic['subject_EN'], dic['coding'],LOG_ENABLED)
+                                  dic['subject_EN'], dic['coding'], LOG_ENABLED)
             print(status)
             print(data)
         except Exception as e:
@@ -76,7 +76,7 @@ def test_Spider():
         finally:
             print('-' * 51)
 
-  
+
 def main():
     Mkdir('Log')
     Mkdir('Data')
@@ -89,6 +89,6 @@ def main():
     test_spider_config()
     test_Spider()
 
-    
+
 if __name__ == '__main__':
     main()

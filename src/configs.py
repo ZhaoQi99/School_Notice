@@ -1,4 +1,4 @@
-# encoding='utf-8' 
+# encoding='utf-8'
 '''
 Created on Sep 19, 2018
 
@@ -29,20 +29,20 @@ LOG_ENABLED = True
 
 # spider config
 SPIDER_CONFIG = [
-{
-    'subject_EN':'',
-    'subject_CN':'',
-    'url': '',
-    'url_main' : '',
-    'rule' : '',
-    'coding':''
-},
-{
-    'subject_EN':'',
-    'subject_CN':'',
-    'url': '',
-    'url_main' : '',
-    'rule' : '',
-    'coding':''
-}
-  ]
+    {
+        'subject_EN': '',
+        'subject_CN': '',
+        'url': '',
+        'url_main': '',
+        'rule': '',
+        'coding': ''
+    },
+    {
+        'subject_EN': '',
+        'subject_CN': '',
+        'url': '',
+        'url_main': '',
+        'rule': '',
+        'coding': ''
+    }
+]
