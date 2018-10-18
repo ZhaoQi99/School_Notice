@@ -11,3 +11,4 @@ script:
   - python test_spider.py
   - python test_tool.py
   - python test_tool.py
+  - python test_single_spider.py
