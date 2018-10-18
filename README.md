@@ -31,8 +31,8 @@ An application of using python to check notifications update for various campus 
 1. Using command to clone the the repository to local folder
 `git clone https://github.com/ZhaoQi99/School_Notice.git`
 2. Apply for [Twilio](https://www.twilio.com/) Free trial account
-3. Edit the ' configs.py ' file to modify the configuration file.
-4. Run the ' main.py ' file
+3. Edit the `configs.py` file to modify the configuration file.
+4. Run the `main.py` file
 
 ## Configuration
 You can (and should) modify a couple of settings. if you do not need to use the twilio/Mail reminder feature, keep the default.
@@ -71,7 +71,7 @@ LOG_ENABLED = True
 Crawler  configuration，including: department type (EN), department type (CN),  "more notifications " page link, link public part, regular expression, Web page encoding format
 subject_ENf: File name of data file
 subject_CN： Used to display in logs, message headers
-**Warning: There must be three groups in the regular expression, which11 the name must be ' link,date,title ' `**
+**Warning: There must be three groups in the regular expression, which the name must be ` link,date,title`**
 Such as:`info/1085/(?P<link>\d+\.htm)" target="_blank">(?P<title>[\s\S]{5,100})（(?P<date>\d*-\d*-\d*)）`
 ```python
 SPIDER_CONFIG = [
