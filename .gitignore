@@ -8,3 +8,6 @@
 /src/main.spec
 /src/build/
 /src/dist/
+/test/Log/
+/test/__pycache__/
+/test/Data/
