@@ -9,6 +9,7 @@ Created on Mar 7, 2018
 import urllib.request
 import re
 import tool
+import sqlhelper
 
 
 def Spider_data(url, rule, coding='utf-8'):
@@ -37,7 +38,7 @@ def Spider_data(url, rule, coding='utf-8'):
 def Data_processing(subject_EN, data, url_main):
     '''
     读取数据文件,并将新抓取的通知信息中的链接部分处理为长链接,
-    然后以通知链接为参照,与数据文件中的数据进行对比，并将新通知的以附加写的形式写入数据文件,
+    然后以通知链接为参照,与数据库中的数据进行对比，并将新通知写入数据库,
     返回检查更新的状态码与处理后的数据
 
     Args:
@@ -57,20 +58,15 @@ def Data_processing(subject_EN, data, url_main):
     for item_dict in data:
         item_dict['link'] = url_main + item_dict['link']
 
-    file = 'Data/' + subject_EN + '.md'
-    tool.Mkfile(file)  # 初次抓取时新建数据文件
-    f_before = open(file, 'rb')  # 读取数据文件中的通知信息
-    txt_before = f_before.read().decode('utf-8')
-    f_before.close()
+    table_name = subject_EN
+    if sqlhelper.ExistTable('database', table_name) == False:
+        sql = 'CREATE TABLE' + ' ' + table_name + \
+            '(link Text PRIMARY KEY,title Text,datee Text)'
+        sqlhelper.Execute('database', sql)
 
     # 收集所有的link信息
-    all_link = []
-    split_rule = '(?P<title>[^ ]*) (?P<date>\d*-\d*-\d*) (?P<link>[^\n]*)\n'
-    pattern = re.compile(split_rule, re.S)
-    data_before = pattern.finditer(txt_before)
-    for item in data_before:
-        dic = item.groupdict()
-        all_link.append(dic['link'])
+    sql = 'select * from' + ' ' + table_name
+    all_link = sqlhelper.FetchRow('database', sql, 0)
 
     # 生成新数据
     status = 0  # 是否有新通知的标志
@@ -80,17 +76,18 @@ def Data_processing(subject_EN, data, url_main):
             item['date'] = item['date'].replace('/', '-')  # 将日期统一转换为yy-mm-dd格式
             status += 1
             new_data.append(item)
-    if len(txt_before) == 0:  # 首次抓取
+    if len(all_link) == 0:  # 首次抓取
         status = -1
 
+    # Todo: 解决频繁开启关闭数据库的问题
+    # Todo: 异常处理
+
     # 将新抓取到的通知信息写入数据文件
-    f_temp = open(file, 'ab')
     for item in new_data:
-        f_temp.write(item['title'].encode('utf-8'))
-        f_temp.write(" ".encode('utf-8') + item['date'].encode('utf-8'))
-        f_temp.write(" ".encode('utf-8') + item['link'].encode('utf-8'))
-        f_temp.write("\n".encode('utf-8'))
-    f_temp.close()
+        sql = "insert into" + " " + table_name + "(link,title,datee) values ('%s','%s','%s')" % (
+            item['link'], item['title'], item['date'])
+#         print(sql)
+        sqlhelper.Execute('database', sql)
     return status, new_data
 
 
