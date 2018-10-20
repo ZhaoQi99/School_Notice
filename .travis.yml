@@ -4,6 +4,7 @@ python:
   - "3.6"
 install:
   - pip install twilio
+  - pip install pypyodbc
 script: 
   - cp src/* test/
   - cd test
