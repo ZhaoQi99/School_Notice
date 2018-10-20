@@ -81,6 +81,7 @@ def main():
     Mkdir('Log')
     Mkdir('Data')
     Mkfile('Log/' + 'Exception_log.log')
+    sqlhelper.CreateDatabase('database')
     test_re_group()
     test_Spider_data_1()
     test_Spider_data_2()
