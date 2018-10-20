@@ -21,7 +21,7 @@ An application of using python to check notifications update for various campus 
 - [x] Send log、check udate log 
 - [x] log function optional
 - [ ] The department which each user need to be reminded is optional
-- [ ] Database storage
+- [x] Database storage
 
 ## Dependencies
 * [Python](http://www.python.org/)
