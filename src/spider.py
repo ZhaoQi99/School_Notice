@@ -38,7 +38,7 @@ def Spider_data(url, rule, coding='utf-8'):
 def Data_processing(subject_EN, data, url_main):
     '''
     读取数据文件,并将新抓取的通知信息中的链接部分处理为长链接,
-    然后以通知链接为参照,与数据文件中的数据进行对比，并将新通知的以附加写的形式写入数据文件,
+    然后以通知链接为参照,与数据库中的数据进行对比，并将新通知写入数据库,
     返回检查更新的状态码与处理后的数据
 
     Args:
@@ -79,17 +79,10 @@ def Data_processing(subject_EN, data, url_main):
     if len(all_link) == 0:  # 首次抓取
         status = -1
 
-    # 将新抓取到的通知信息写入数据文件
-    # f_temp = open(file, 'ab')
-    # for item in new_data:
-    #     f_temp.write(item['title'].encode('utf-8'))
-    #     f_temp.write(" ".encode('utf-8') + item['date'].encode('utf-8'))
-    #     f_temp.write(" ".encode('utf-8') + item['link'].encode('utf-8'))
-    #     f_temp.write("\n".encode('utf-8'))
-    # f_temp.close()
-
     # Todo: 解决频繁开启关闭数据库的问题
     # Todo: 异常处理
+
+    # 将新抓取到的通知信息写入数据文件
     for item in new_data:
         sql = "insert into" + " " + table_name + "(link,title,datee) values ('%s','%s','%s')" % (
             item['link'], item['title'], item['date'])
