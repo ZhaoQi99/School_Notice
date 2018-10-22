@@ -11,7 +11,8 @@ from email.mime.text import MIMEText
 import smtplib
 from tool import Log_Write
 import configs
-
+import requests
+import json
 
 def Send_sms(send_number, msg):
     '''
@@ -101,6 +102,43 @@ def Send_email(txt, to_addr_str, subject):
     smtp.quit()
     return log_send_email
 
+# 获取微信access_token
+# TODO 每两小时token会过期，一天大概只能获取2000次
+def get_token():
+    payload_access_token={
+        'grant_type': configs.GRANT_TYPE,
+        'appid': configs.APPID,
+        'secret': configs.SECRET
+    }
+    token_url='https://api.weixin.qq.com/cgi-bin/token'
+    try:
+        r=requests.get(token_url,params=payload_access_token)
+        dict_result= (r.json())
+        log_send_wechat = '获取token成功'
+    except ConnectionError:
+        log_send_wechat = '获取token失败，请检查获取上限或网络';
+    return dict_result['access_token']
+
+
+# 发送消息给订阅号(订阅号由get_token决定
+def send_to_wechat(str='default_words!'):
+    pay_send_all={
+        "filter":{
+            "is_to_all": True
+        },
+        "text":{
+            "content":str
+        },
+        "msgtype":"text"
+    }
+    url="https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token="+get_token()
+    try:
+        r=requests.post(url=url,data=json.dumps(pay_send_all,ensure_ascii=False,indent=2))
+        result=r.json()
+        log_send_wechat = '微信发送成功'
+    except ConnectionError:
+        log_send_wechar = '微信发送失败'
+    return result['errcode']==0
 
 def Send(msgs, subject, send_number, to_addr_str, flag=True):
     '''
@@ -128,10 +166,13 @@ def Send(msgs, subject, send_number, to_addr_str, flag=True):
             + '\n' + '时间:' + msg['date'] + '\n' + '查看:' + msg['link']
         log_send_sms = []
         log_send_email = []
+        log_send_wechat = [] 
         log_send_sms.append(Send_sms(send_number, temp))
         log_send_email.append(Send_email(temp, to_addr_str, subject + '更新通知'))
-
+        log_send_wechat(temp)
+        send_to_wechat(temp)
         log_send.append(log_send_sms)
         log_send.append(log_send_email)
+        log_send.append(log_send_wechat)
     if(flag == True):
         Log_Write('Send', log_send)
