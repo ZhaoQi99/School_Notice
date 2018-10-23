@@ -98,7 +98,8 @@ def Send_email(txt, to_addr_str, subject):
     except ConnectionError:
         #         print('发送失败，请检查你的账号是否有效或网络是否良好！')
         log_send_email = to_addr_str[0:-1] + ' ' + '邮件发送失败，请检查你的账号是否有效或网络是否良好！'
-
+    except Exception as e:
+        log_send_email=to_addr_str[0:-1] + ' ' +e.message
     smtp.quit()
     return log_send_email
 
@@ -114,10 +115,10 @@ def get_token():
     try:
         r=requests.get(token_url,params=payload_access_token)
         dict_result= (r.json())
-        log_send_wechat = '获取token成功'
+        #log_send_wechat = '获取token成功'
         return dict_result['access_token']
     except ConnectionError:
-        log_send_wechat = '获取token失败，请检查获取上限或网络';
+        raise Exception('获取token失败，请检查获取上限或网络')
 
 
 # 发送消息给订阅号(订阅号由get_token决定
@@ -136,11 +137,11 @@ def send_to_wechat(str='default_words!'):
         jsonstr = json.dumps(pay_send_all,ensure_ascii=False,indent = 2 ) ; # 转换到json，注意处理中文的unicode
         headers = {'content-type': 'text/json','charset':'utf-8'} # 加http header，命令以utf-8解析
         r=requests.post(url=url,data=jsonstr.encode('utf-8') , headers=headers )
-        result=r.json()
+        # result=r.json()
         log_send_wechat = '微信发送成功'
     except ConnectionError:
-        log_send_wechar = '微信发送失败'
-    return result['errcode']==0
+        log_send_wechat = '微信发送失败'
+    return log_send_wechat
 
 def Send(msgs, subject, send_number, to_addr_str, flag=True):
     '''
@@ -171,8 +172,7 @@ def Send(msgs, subject, send_number, to_addr_str, flag=True):
         log_send_wechat = [] 
         log_send_sms.append(Send_sms(send_number, temp))
         log_send_email.append(Send_email(temp, to_addr_str, subject + '更新通知'))
-        log_send_wechat(temp)
-        send_to_wechat(temp)
+        log_send_wechat.append(send_to_wechat(temp))
         log_send.append(log_send_sms)
         log_send.append(log_send_email)
         log_send.append(log_send_wechat)
