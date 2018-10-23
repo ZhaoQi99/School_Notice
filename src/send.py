@@ -16,7 +16,7 @@ import json
 
 def Send_sms(send_number, msg):
     '''
-    向手机号码为send_number的人发送内容为msg的短信
+    向手机号码为send_number的人发送内容为msg的短信 
     支持多个手机号码的发送
     Args:
         send_number: 短信接收者的手机号码
@@ -133,7 +133,9 @@ def send_to_wechat(str='default_words!'):
     }
     url="https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token="+get_token()
     try:
-        r=requests.post(url=url,data=json.dumps(pay_send_all,ensure_ascii=False,indent=2))
+        jsonstr = json.dumps(pay_send_all,ensure_ascii=False,indent = 2 ) ; # 转换到json，注意处理中文的unicode
+        headers = {'content-type': 'text/json','charset':'utf-8'} # 加http header，命令以utf-8解析
+        r=requests.post(url=url,data=jsonstr.encode('utf-8') , headers=headers )
         result=r.json()
         log_send_wechat = '微信发送成功'
     except ConnectionError:
