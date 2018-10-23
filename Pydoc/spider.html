@@ -22,9 +22,10 @@
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="sqlhelper.html">sqlhelper</a><br>
 </td><td width="25%" valign=top><a href="tool.html">tool</a><br>
 </td><td width="25%" valign=top><a href="urllib.html">urllib</a><br>
-</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -32,7 +33,7 @@
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl><dt><a name="-Data_processing"><strong>Data_processing</strong></a>(subject_EN, data, url_main)</dt><dd><tt>读取数据文件,并将新抓取的通知信息中的链接部分处理为长链接,<br>
-然后以通知链接为参照,与数据文件中的数据进行对比，并将新通知的以附加写的形式写入数据文件,<br>
+然后以通知链接为参照,与数据库中的数据进行对比，并将新通知写入数据库,<br>
 返回检查更新的状态码与处理后的数据<br>
 &nbsp;<br>
 Args:<br>
@@ -47,14 +48,14 @@ Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'<a href="http://xxxx.com">http://xxxx.com</a>'},<br>
 &nbsp;&nbsp;&nbsp;&nbsp;{'title':'关于xxx的通知','date':'2017-03-10','link':'<a href="http://xxxx.com">http://xxxx.com</a>‘}]</tt></dd></dl>
  <dl><dt><a name="-Log_generate"><strong>Log_generate</strong></a>(status, data, subject_CN)</dt><dd><tt>&nbsp;&nbsp;&nbsp;&nbsp;依据检查更新的结果，生成不同的日志内容，并返回日志内容<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data:存储通知提醒主要内容的列表，且该列表每个元素为字典<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'<a href="http://xxxx.com">http://xxxx.com</a>'},<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'title':'关于xxx的通知','date':'2017-03-10','link':'<a href="http://xxxx.com">http://xxxx.com</a>'}]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subject_CN:&nbsp;抓取的网站类型<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status:&nbsp;检查更新的状态码<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log_txt:&nbsp;日志的主要内容，类型为字符串或每个元素均为列表的列表，且元素列表的元素均为字符串。<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如:'首次抓取师师大主页！<br>
@@ -74,7 +75,7 @@ Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subject_CN:&nbsp;抓取的网站类型<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subject_EN:&nbsp;生成的日志文件的文件名前缀，数据文件的文件名，以及输出时显示在单条日志信息前的对日志类型的描述<br>
 &nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;一个可选变量，用来决定是否在日志中记录此次检查的结果，默认为True(记录)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;status:&nbsp;检查更新的状态码<br>
 &nbsp;&nbsp;&nbsp;&nbsp;new_data:&nbsp;存取通知提醒的主要内容，类型每个元素均为字典的列表<br>
@@ -84,7 +85,7 @@ Returns:<br>
 Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;要爬取的页面的统一资源定位符<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rule:&nbsp;表示正则表达式规则的字符串,限制为三个分组<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;data_use:&nbsp;存储经正则表达式匹配后的有用信息的列表，且该列表每个元素为字典<br>
 &nbsp;&nbsp;&nbsp;&nbsp;例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'id=5'},<br>
