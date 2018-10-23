@@ -115,9 +115,9 @@ def get_token():
         r=requests.get(token_url,params=payload_access_token)
         dict_result= (r.json())
         log_send_wechat = '获取token成功'
+        return dict_result['access_token']
     except ConnectionError:
         log_send_wechat = '获取token失败，请检查获取上限或网络';
-    return dict_result['access_token']
 
 
 # 发送消息给订阅号(订阅号由get_token决定
