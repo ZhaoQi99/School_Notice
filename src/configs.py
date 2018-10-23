@@ -49,7 +49,7 @@ SPIDER_CONFIG = [
 
 # we_chat config
 
-GRANT_TYPE = ' '
+GRANT_TYPE = 'client_credentials'
 APPID = ' '
 SECRET = ' ' 
 
