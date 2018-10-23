@@ -46,3 +46,10 @@ SPIDER_CONFIG = [
         'coding': ''
     }
 ]
+
+# we_chat config
+
+GRANT_TYPE = 'client_credential'
+APPID = ' '
+SECRET = ' ' 
+

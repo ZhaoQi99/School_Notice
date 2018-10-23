@@ -11,11 +11,12 @@ from email.mime.text import MIMEText
 import smtplib
 from tool import Log_Write
 import configs
-
+import requests
+import json
 
 def Send_sms(send_number, msg):
     '''
-    向手机号码为send_number的人发送内容为msg的短信
+    向手机号码为send_number的人发送内容为msg的短信 
     支持多个手机号码的发送
     Args:
         send_number: 短信接收者的手机号码
@@ -97,10 +98,50 @@ def Send_email(txt, to_addr_str, subject):
     except ConnectionError:
         #         print('发送失败，请检查你的账号是否有效或网络是否良好！')
         log_send_email = to_addr_str[0:-1] + ' ' + '邮件发送失败，请检查你的账号是否有效或网络是否良好！'
-
+    except Exception as e:
+        log_send_email=to_addr_str[0:-1] + ' ' +e.message
     smtp.quit()
     return log_send_email
 
+# 获取微信access_token
+# TODO 每两小时token会过期，一天大概只能获取2000次
+def get_token():
+    payload_access_token={
+        'grant_type': configs.GRANT_TYPE,
+        'appid': configs.APPID,
+        'secret': configs.SECRET
+    }
+    token_url='https://api.weixin.qq.com/cgi-bin/token'
+    try:
+        r=requests.get(token_url,params=payload_access_token)
+        dict_result= (r.json())
+        #log_send_wechat = '获取token成功'
+        return dict_result['access_token']
+    except ConnectionError:
+        raise Exception('获取token失败，请检查获取上限或网络')
+
+
+# 发送消息给订阅号(订阅号由get_token决定
+def send_to_wechat(str='default_words!'):
+    pay_send_all={
+        "filter":{
+            "is_to_all": True
+        },
+        "text":{
+            "content":str
+        },
+        "msgtype":"text"
+    }
+    url="https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token="+get_token()
+    try:
+        jsonstr = json.dumps(pay_send_all,ensure_ascii=False,indent = 2 ) ; # 转换到json，注意处理中文的unicode
+        headers = {'content-type': 'text/json','charset':'utf-8'} # 加http header，命令以utf-8解析
+        r=requests.post(url=url,data=jsonstr.encode('utf-8') , headers=headers )
+        # result=r.json()
+        log_send_wechat = '微信发送成功'
+    except ConnectionError:
+        log_send_wechat = '微信发送失败'
+    return log_send_wechat
 
 def Send(msgs, subject, send_number, to_addr_str, flag=True):
     '''
@@ -128,10 +169,12 @@ def Send(msgs, subject, send_number, to_addr_str, flag=True):
             + '\n' + '时间:' + msg['date'] + '\n' + '查看:' + msg['link']
         log_send_sms = []
         log_send_email = []
+        log_send_wechat = [] 
         log_send_sms.append(Send_sms(send_number, temp))
         log_send_email.append(Send_email(temp, to_addr_str, subject + '更新通知'))
-
+        log_send_wechat.append(send_to_wechat(temp))
         log_send.append(log_send_sms)
         log_send.append(log_send_email)
+        log_send.append(log_send_wechat)
     if(flag == True):
         Log_Write('Send', log_send)
