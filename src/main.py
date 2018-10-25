@@ -13,7 +13,6 @@ from tool import Mkdir, Mkfile, Log_Write
 import os
 from traceback import format_exc
 import send
-from sqlhelper import CreateDatabase
 
 def Init():
     '''首次使用时，程序初始化'''
@@ -22,8 +21,6 @@ def Init():
     Mkfile('Log/' + 'Exception_log.log')
     # 新建数据库
     database_name='database'
-    if CreateDatabase(database_name)==True:
-        Log_Write('新建文件', database_name + '\n')
         
     File_Path = os.getcwd() + '\\Data\\user.md'
     if not os.path.exists(File_Path):  # 不存在user.md文件

@@ -2,30 +2,32 @@
 Created on Oct 19, 2018
 @author: QiZhao
 '''
-import pypyodbc
+import pymysql
 import os
+import re
 
-
-def ExistTable(data_base, table_name):
+def ExistTable(target_ip , user_name, pwd, db_name, table_name):
     '''
     判断数据库中是否存在某张表,返回True或Flase
 
     Args:
-        data_base: 数据库文件的文件名
+        target_ip: 连接目标的ip
+        user_name: 数据库用户名
+        pwd: 数据库用户的密码
+        db_name: 数据库名称
         table_name: 表名
     Returns:
         返回True或Flase
     '''
-
-    path = os.getcwd() + "\\" + data_base + ".mdb"
     try:
-        connection = pypyodbc.win_connect_mdb(path)
+        connection = pymysql.connect(host = target_ip,user = user_name,passwd = pwd,db = db_name )
         cursor = connection.cursor()
-        res = cursor.tables()
-        tables = []
-        for i in res:
-            tables.append(i[2])
-        if table_name in tables:
+        sql = 'show tables;'
+        cursor.execute(sql)
+        tables = [cursor.fetchall()]
+        table_list = re.findall('(\'.*?\')',str(tables))
+        table_list = [re.sub("'",'',each) for each in table_list]
+        if table_name in table_list:
             return True
         else:
             return False
@@ -35,20 +37,21 @@ def ExistTable(data_base, table_name):
         raise e
 
 
-def Execute(data_base, sql):
+def Execute(target_ip , user_name, pwd, db_name, sql):
     '''
     执行一条SQL语句,返回SQL语句执行后影响的行数
 
     Args:
-        data_base: 数据库文件的文件名
+        target_ip: 连接目标的ip
+        user_name: 数据库用户名
+        pwd: 数据库用户的密码
+        db_name: 数据库名称
         sql: SQL语句
     Returns:
         res: SQL语句执行后影响的行数
     '''
-
-    path = os.getcwd() + "\\" + data_base + ".mdb"
     try:
-        connection = pypyodbc.win_connect_mdb(path)
+        connection = pymysql.connect(host = target_ip,user = user_name,passwd = pwd,db = db_name )
         cursor = connection.cursor()
         res = cursor.execute(sql)
         connection.commit()
@@ -60,41 +63,22 @@ def Execute(data_base, sql):
         raise e
 
 
-def CreateDatabase(data_base):
-    '''
-    判断当前路径是否存在数据库文件
-    如果不存在,则尝试创建数据库文件,
-    返回创建的结果
-
-    Args:
-        data_base: 数据库文件的文件名
-    Returns:
-        返回True或Flase
-    '''
-    path = os.getcwd() + "\\" + data_base + ".mdb"
-    try:
-        if not os.path.exists(path):
-            connection = pypyodbc.win_create_mdb(path)
-            connection.close()
-            return True
-        return False
-    except Exception as e:
-        raise e
-
-
-def Fetchall(data_base, sql):
+def Fetchall(target_ip , user_name, pwd, db_name, sql):
     '''
     执行一条SQL语句,返回查询结果的所有行
+    
     Args:
-        data_base: 数据库文件的文件名
+        target_ip: 连接目标的ip
+        user_name: 数据库用户名
+        pwd: 数据库用户的密码
+        db_name: 数据库名称
         sql: SQL语句
     Returns:
         res: 一个list,包含查询的结果,
         元素为元组,代表一行信息
     '''
-    path = os.getcwd() + "\\" + data_base + ".mdb"
     try:
-        connection = pypyodbc.win_connect_mdb(path)
+        connection = pymysql.connect(host = target_ip,user = user_name,passwd = pwd,db = db_name )
         cursor = connection.cursor()
         cursor.execute(sql)
         res = cursor.fetchall()
@@ -106,23 +90,25 @@ def Fetchall(data_base, sql):
         raise e
 
 
-def FetchRow(data_base, sql, column):
+def FetchRow(target_ip , user_name, pwd, db_name, sql, column):
     '''
     执行一条sql语句,并从查询结果中筛选指定的某一列的所有内容
 
     Args:
-        data_base: 数据库文件的文件名
+        target_ip: 连接目标的ip
+        user_name: 数据库用户名
+        pwd: 数据库用户的密码
+        db_name: 数据库名称
         sql: SQL语句
         column: 第几列,从0开始
     Returns:
         res: 一个list,包含指定列的所有结果
     '''
-    path = os.getcwd() + "\\" + data_base + ".mdb"
     try:
-        connection = pypyodbc.win_connect_mdb(path)
+        connection = pymysql.connect(host = target_ip,user = user_name,passwd = pwd,db = db_name )
         cursor = connection.cursor()
         cursor.execute(sql)
-        row_count = cursor._NumOfCols()
+        row_count = cursor.rowcount
         if column >= row_count:
             raise IndexError
         res = cursor.fetchall()
