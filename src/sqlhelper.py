@@ -1,123 +1,122 @@
-'''
-Created on Oct 19, 2018
-@author: QiZhao
-'''
 import pymysql
-import os
 import re
 
-def ExistTable(target_ip , user_name, pwd, db_name, table_name):
+class SqlHelper():
     '''
-    判断数据库中是否存在某张表,返回True或Flase
+    数据库帮助类，实现数据库的一些操作
 
     Args:
         target_ip: 连接目标的ip
         user_name: 数据库用户名
         pwd: 数据库用户的密码
-        db_name: 数据库名称
-        table_name: 表名
-    Returns:
-        返回True或Flase
+
     '''
-    try:
-        connection = pymysql.connect(host = target_ip,user = user_name,passwd = pwd,db = db_name )
-        cursor = connection.cursor()
-        sql = 'show tables;'
-        cursor.execute(sql)
-        tables = [cursor.fetchall()]
-        table_list = re.findall('(\'.*?\')',str(tables))
-        table_list = [re.sub("'",'',each) for each in table_list]
-        if table_name in table_list:
-            return True
-        else:
-            return False
-    except Exception as e:
-        connection.rollback()
-        connection.close()
-        raise e
+    def __init__(self , target_ip , user_name , pwd):
+        self.target_ip = target_ip
+        self.user_name = user_name
+        self.pwd = pwd
 
 
-def Execute(target_ip , user_name, pwd, db_name, sql):
-    '''
-    执行一条SQL语句,返回SQL语句执行后影响的行数
-
-    Args:
-        target_ip: 连接目标的ip
-        user_name: 数据库用户名
-        pwd: 数据库用户的密码
-        db_name: 数据库名称
-        sql: SQL语句
-    Returns:
-        res: SQL语句执行后影响的行数
-    '''
-    try:
-        connection = pymysql.connect(host = target_ip,user = user_name,passwd = pwd,db = db_name )
-        cursor = connection.cursor()
-        res = cursor.execute(sql)
-        connection.commit()
-        connection.close()
-        return res
-    except Exception as e:
-        connection.rollback()
-        connection.close()
-        raise e
-
-
-def Fetchall(target_ip , user_name, pwd, db_name, sql):
-    '''
-    执行一条SQL语句,返回查询结果的所有行
+    def ExistTable(self, db_name, table_name):
+        '''
+        判断数据库中是否存在某张表,返回True或Flase
     
-    Args:
-        target_ip: 连接目标的ip
-        user_name: 数据库用户名
-        pwd: 数据库用户的密码
-        db_name: 数据库名称
-        sql: SQL语句
-    Returns:
-        res: 一个list,包含查询的结果,
-        元素为元组,代表一行信息
-    '''
-    try:
-        connection = pymysql.connect(host = target_ip,user = user_name,passwd = pwd,db = db_name )
-        cursor = connection.cursor()
-        cursor.execute(sql)
-        res = cursor.fetchall()
-        connection.close()
-        return res
-    except Exception as e:
-        connection.rollback()
-        connection.close()
-        raise e
+        Args:
+            db_name: 数据库名称
+            table_name: 表名
+        Returns:
+            返回True或Flase
+        '''
+        try:
+            connection = pymysql.connect(host = self.target_ip, user = self.user_name, passwd = self.pwd, db = db_name )
+            cursor = connection.cursor()
+            sql = 'show tables;'
+            cursor.execute(sql)
+            tables = [cursor.fetchall()]
+            table_list = re.findall('(\'.*?\')',str(tables))
+            table_list = [re.sub("'",'',each) for each in table_list]
+            if table_name in table_list:
+                return True
+            else:
+                return False
+        except Exception as e:
+            connection.rollback()
+            connection.close()
+            raise e
 
 
-def FetchRow(target_ip , user_name, pwd, db_name, sql, column):
-    '''
-    执行一条sql语句,并从查询结果中筛选指定的某一列的所有内容
+    def Execute(self, db_name, sql):
+        '''
+        执行一条SQL语句,返回SQL语句执行后影响的行数
+    
+        Args:
+            db_name: 数据库名称
+            sql: SQL语句
+        Returns:
+            res: SQL语句执行后影响的行数
+        '''
+        try:
+            connection = pymysql.connect(host = self.target_ip,user = self.user_name,passwd = self.pwd,db = db_name )
+            cursor = connection.cursor()
+            res = cursor.execute(sql)
+            connection.commit()
+            connection.close()
+            return res
+        except Exception as e:
+            connection.rollback()
+            connection.close()
+            raise e
 
-    Args:
-        target_ip: 连接目标的ip
-        user_name: 数据库用户名
-        pwd: 数据库用户的密码
-        db_name: 数据库名称
-        sql: SQL语句
-        column: 第几列,从0开始
-    Returns:
-        res: 一个list,包含指定列的所有结果
-    '''
-    try:
-        connection = pymysql.connect(host = target_ip,user = user_name,passwd = pwd,db = db_name )
-        cursor = connection.cursor()
-        cursor.execute(sql)
-        row_count = cursor.rowcount
-        if column >= row_count:
-            raise IndexError
-        res = cursor.fetchall()
-        ret = []
-        for col in res:
-            ret.append(col[column])
-        connection.close()
-        return ret
-    except Exception as e:
-        connection.rollback()
-        connection.close()
-        raise e
+
+    def Fetchall(self , db_name, sql):
+        '''
+        执行一条SQL语句,返回查询结果的所有行
+        
+        Args:
+            db_name: 数据库名称
+            sql: SQL语句
+        Returns:
+            res: 一个list,包含查询的结果,元素为元组,代表一行信息
+        '''
+        try:
+            connection = pymysql.connect(host = self.target_ip,user = self.user_name,passwd = self.pwd,db = db_name )
+            cursor = connection.cursor()
+            cursor.execute(sql)
+            res = cursor.fetchall()
+            connection.close()
+            return res
+        except Exception as e:
+            connection.rollback()
+            connection.close()
+            raise e
+
+
+    def FetchRow(self , db_name, sql, column):
+        '''
+        执行一条sql语句,并从查询结果中筛选指定的某一列的所有内容
+    
+        Args:
+            db_name: 数据库名称
+            sql: SQL语句
+            column: 第几列,从0开始
+        Returns:
+            res: 一个list,包含指定列的所有结果
+        '''
+        try:
+            connection = pymysql.connect(host = self.target_ip,user = self.user_name,passwd = self.pwd,db = db_name )
+            cursor = connection.cursor()
+            cursor.execute(sql)
+            row_count = cursor.rowcount
+            print(row_count)
+            if column >= row_count:
+                raise IndexError        
+            res = cursor.fetchall()
+            ret = []
+            for col in res:
+                ret.append(col[column])
+            connection.close()
+            return ret
+        except Exception as e:
+            connection.rollback()
+            connection.close()
+            raise e
