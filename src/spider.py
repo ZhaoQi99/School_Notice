@@ -1,4 +1,5 @@
 # encoding='utf-8'
+import configs
 '''
 Created on Mar 7, 2018
 
@@ -54,19 +55,23 @@ def Data_processing(subject_EN, data, url_main):
         {'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com‘}]
     '''
 
+    helper = sqlhelper.SqlHelper(
+        configs.TARGET_IP, configs.SQL_USERNAME, configs.SQL_PASSWORD)
+    if helper.ExistDatabase(configs.DATABASE_NAME)==False:
+        helper.CreateDatabase(configs.DATABASE_NAME)
     # 处理为长网址
     for item_dict in data:
         item_dict['link'] = url_main + item_dict['link']
 
     table_name = subject_EN
-    if sqlhelper.ExistTable('database', table_name) == False:
+    if helper.ExistTable(configs.DATABASE_NAME, table_name) == False:
         sql = 'CREATE TABLE' + ' ' + table_name + \
-            '(link Text PRIMARY KEY,title Text,datee Text)'
-        sqlhelper.Execute('database', sql)
+            '(id int PRIMARY KEY AUTO_INCREMENT,link Text,title Text,date Text)'
+        helper.Execute(configs.DATABASE_NAME, sql)
 
     # 收集所有的link信息
     sql = 'select * from' + ' ' + table_name
-    all_link = sqlhelper.FetchRow('database', sql, 0)
+    all_link = helper.FetchCol(configs.DATABASE_NAME, table_name,sql, 2)
 
     # 生成新数据
     status = 0  # 是否有新通知的标志
@@ -84,10 +89,10 @@ def Data_processing(subject_EN, data, url_main):
 
     # 将新抓取到的通知信息写入数据文件
     for item in new_data:
-        sql = "insert into" + " " + table_name + "(link,title,datee) values ('%s','%s','%s')" % (
+        sql = "insert into" + " " + table_name + "(link,title,date) values ('%s','%s','%s')" % (
             item['link'], item['title'], item['date'])
 #         print(sql)
-        sqlhelper.Execute('database', sql)
+        helper.Execute(configs.DATABASE_NAME, sql)
     return status, new_data
 
 

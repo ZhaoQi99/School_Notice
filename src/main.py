@@ -19,8 +19,6 @@ def Init():
     Mkdir('Log')
     Mkdir('Data')
     Mkfile('Log/' + 'Exception_log.log')
-    # 新建数据库
-    database_name='database'
         
     File_Path = os.getcwd() + '\\Data\\user.md'
     if not os.path.exists(File_Path):  # 不存在user.md文件
