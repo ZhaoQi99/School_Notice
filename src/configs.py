@@ -1,12 +1,10 @@
 # encoding='utf-8'
 '''
 Created on Sep 19, 2018
-
 @author: QiZhao
 @license: GNU GPLv3
 @version: 0.2.0
 '''
-
 # show config
 SCHOOL_NAME = ''
 VERSION = ''
@@ -53,3 +51,8 @@ GRANT_TYPE = 'client_credential'
 APPID = ' '
 SECRET = ' ' 
 
+# mysql config
+TARGET_IP=''
+SQL_USERNAME=''
+SQL_PASSWORD=''
+DATABASE_NAME=''
