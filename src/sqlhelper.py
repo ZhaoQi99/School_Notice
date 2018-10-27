@@ -121,3 +121,52 @@ class SqlHelper():
             connection.rollback()
             connection.close()
             raise e
+        
+    def CreateDatabase(self,db_name):
+        '''
+        创建一个数据库.如果已存在该数据库,则删除该数据库后再创建
+
+        Args:
+            db_name: 数据库名称
+        Returns:
+            res: 返回True或Flase
+        '''
+        try:
+            connection = pymysql.connect(
+                host=self.target_ip, user=self.user_name, passwd=self.pwd)
+            cursor = connection.cursor()
+            sql='DROP DATABASE '+db_name
+            cursor.execute(sql)
+            sql='CREATE DATABASE if not exists '+db_name
+            cursor.execute(sql)
+            connection.commit()
+            connection.close()
+        except Exception as e:
+            connection.rollback()
+            connection.close()
+            raise e
+        
+    def ExistDatabase(self,db_name):
+        '''
+        判断是否存在某个数据库,返回True或Flase
+
+        Args:
+            db_name: 数据库名称
+        Returns: 返回True或Flase
+        '''
+        try:
+            connection = pymysql.connect(
+                host=self.target_ip, user=self.user_name, passwd=self.pwd)
+            cursor = connection.cursor()
+            cursor.execute('show databases')
+            databases = cursor.fetchall()
+            database_list=re.findall('(\'.*?\')', str(databases))
+            database_list = [re.sub("'", '', each) for each in database_list]
+            if db_name in database_list:
+                return True
+            else:
+                return False
+        except Exception as e:
+            connection.rollback()
+            connection.close()
+            raise e
