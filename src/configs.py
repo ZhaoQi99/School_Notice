@@ -1,9 +1,12 @@
 # encoding='utf-8'
 '''
-Created on Sep 19, 2018
 @author: QiZhao
+@contact: zhaoqi99@outlook.com
+@since: 2018-09-19
 @license: GNU GPLv3
-@version: 0.2.0
+@version: 0.2.1
+@LastModifiedBy: QiZhao
+@LastModifiedDate: 2018-10-27
 '''
 # show config
 SCHOOL_NAME = ''

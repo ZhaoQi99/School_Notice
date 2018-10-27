@@ -1,11 +1,13 @@
-import twilio
 '''
-Created on Mar 7, 2018
-
 @author: QiZhao
+@contact: zhaoqi99@outlook.com
+@since: 2018-05-07
 @license: GNU GPLv3
-@version: 0.2.0
+@version: 0.2.1
+@LastModifiedBy: Keyi Xie
+@LastModifiedDate: 2018-10-23
 '''
+import twilio
 from twilio.rest import Client
 from email.mime.text import MIMEText
 import smtplib

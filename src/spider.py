@@ -1,11 +1,13 @@
 # encoding='utf-8'
 import configs
 '''
-Created on Mar 7, 2018
-
 @author: QiZhao
+@contact: zhaoqi99@outlook.com
+@since: 2018-05-07
 @license: GNU GPLv3
-@version: 0.2.0
+@version: 0.2.1
+@LastModifiedBy: QiZhao
+@LastModifiedDate: 2018-10-27
 '''
 import urllib.request
 import re

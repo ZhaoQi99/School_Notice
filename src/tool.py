@@ -1,11 +1,14 @@
 # encoding='utf-8'
 '''
-Created on Mar 8, 2018
-
 @author: QiZhao
+@contact: zhaoqi99@outlook.com
+@since: 2018-05-08
 @license: GNU GPLv3
 @version: 0.2.0
+@LastModifiedBy: QiZhao
+@LastModifiedDate: 2018-10-18
 '''
+
 import time
 import os
 

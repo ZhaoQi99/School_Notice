@@ -1,3 +1,12 @@
+'''
+@author: QiZhao
+@contact: zhaoqi99@outlook.com
+@since: 2018-09-19
+@license: GNU GPLv3
+@version: 0.2.1
+@LastModifiedBy: jhy
+@LastModifiedDate: 2018-10-27
+'''
 import pymysql
 import re
 
