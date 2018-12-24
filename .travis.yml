@@ -3,13 +3,8 @@ sudo: true
 python:
   - "3.6"
 install:
-  - pip install twilio
-  - pip install pypyodbc
+  - pip install -r requirements.txt
 script: 
   - cp src/* test/
   - cd test
-  - python test_spider.py
-  - python test_spider.py
-  - python test_tool.py
-  - python test_tool.py
-  - python test_single_spider.py
+  - /usr/bin/time -v python test_spider.py

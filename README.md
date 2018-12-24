@@ -21,7 +21,7 @@ An application of using python to check notifications update for various campus 
 - [x] Send log、check udate log 
 - [x] log function optional
 - [ ] The department which each user need to be reminded is optional
-- [x] Database storage
+- [x] Database storage／file storge
 
 ## Dependencies
 * [Python](http://www.python.org/)
@@ -67,47 +67,70 @@ Whether logs can be logged in the log file, which is true by default
 ```
 LOG_ENABLED = True
 ```
+
+### Save Type Config
+The　type of storging data,including file storge,mysql storge
+```
+SAVE_TYPE = 'MYSQL'
+SAVE_TYPE = 'File'
+```
+### Show Right Config
+Whether show the information of copyright.
+```
+SHOW_RIGHT = False
+```
+
 ### Spider Config
-Crawler  configuration，including: department type (EN), department type (CN),  "more notifications " page link, link public part, regular expression, Web page encoding format
-subject_ENf: File name of data file
-subject_CN： Used to display in logs, message headers
+Crawler  configuration，including: department type (EN), department type (CN), "more notifications " page link, link public part, regular expression, Web page encoding format,type(notice/news)
+department_EN: File name of data file
+department_CN： Used to display in logs, message headers
 **Warning: There must be three groups in the regular expression, which the name must be ` link,date,title`**
 Such as:`info/1085/(?P<link>\d+\.htm)" target="_blank">(?P<title>[\s\S]{5,100})（(?P<date>\d*-\d*-\d*)）`
 ```python
 SPIDER_CONFIG = [
-{
-    'subject_EN':'',
-    'subject_CN':'',
-    'url': '',
-    'url_main' : '',
-    'rule' : '',
-    'coding':''
-},
-{
-    'subject_EN':'',
-    'subject_CN':'',
-    'url': '',
-    'url_main' : '',
-    'rule' : '',
-    'coding':''
-}
-  ]
+	{
+	    'department_EN': '',
+	    'department_CN': '',
+	    'url': '',
+	    'url_main': '',
+	    'rule': '',
+	    'coding': '',
+	    'type': '' 
+	},
+	{
+	    'department_EN': '',
+	    'department_CN': '',
+	    'url': '',
+	    'url_main': '',
+	    'rule': '',
+	    'coding': '',
+	    'type': '' 
+	}
+]
 ```
 Here is an example about crawler configuration:
 #### Example
 ```python
 SPIDER_CONFIG = [
-{
-'subject_EN':'snnu_index', 'subject_CN':'师大主页', 'url': 'http://www.snnu.edu.cn/tzgg.htm', 'url_main' : 'http://www.snnu.edu.cn/info/1085/',
- 'rule' : 'info/1085/(?P<link>\d+\.htm)" target="_blank">(?P<title>[\s\S]{5,100})（(?P<date>\d*-\d*-\d*)）','coding':'utf-8'},
-{'subject_EN':'snnu_css', 'subject_CN':'计科院主页', 'url': 'http://ccs.snnu.edu.cn/tzgg.htm', 'url_main' : 'http://ccs.snnu.edu.cn/'
-, 'rule' : '<a target="_blank" href="(?P<link>[^"]*)">(?P<title>[^( </)]*)[^"]*"[^>]*>(?P<date>\d*-\d*-\d*)','coding':'utf-8'},
-{'subject_EN':'snnu_jwc', 'subject_CN':'教务处主页', 'url': 'http://jwc.snnu.edu.cn/news_more.xhm?lm=2', 'url_main' : 'http://jwc.snnu.edu.cn/html/news_view.xhm?newsid=',
- 'rule' : 'newsid=(?P<link>\d*)" [^ ]* title="(?P<title>[^(">)]*)[^<]*[^(]*\((?P<date>\d*/\d*/\d*)','coding':'gbk'},
-{'subject_EN':'snnu_xsc', 'subject_CN':'学生处主页', 'url': 'http://www.xsc.snnu.edu.cn/Announcements.asp', 'url_main' : 'http://www.xsc.snnu.edu.cn/Announcements.asp?id=144&bh=',
- 'rule' : 'gk3">(?P<date>\d*-\d*-\d*)[^;]*;[^;]*;[^;]*;[^;]*;bh=(?P<link>\d*)[^>]*>(?P<title>[^</]*)','coding':'gbk'},
-{'subject_EN':'snnu_lib', 'subject_CN':'图书馆主页', 'url': 'http://www.lib.snnu.edu.cn/action.do?webid=w-d-bggg-l', 'url_main' :  'http://www.lib.snnu.edu.cn/action.do?webid=w-l-showmsg&gtype=a&pid=',
- 'rule' :  'pid=(?P<link>\d*)[\s\S]{20,57}>(?P<title>[^<]*)</[af][\S\s]{18,70}(?P<date>\d{4}-\d*-\d*)','coding':'utf-8'}]
+    {
+        'department_EN': 'snnu_index',
+        'department_CN': '学校主页',
+        'url': 'http://www.snnu.edu.cn/tzgg.htm',
+        'url_main': 'http://www.snnu.edu.cn/info/1085/',
+        'rule': 'info/1085/(?P<link>\d+\.htm)" target="_blank">(?P<title>[\s\S]{5,100})（(?P<date>\d*-\d*-\d*)）',
+        'coding': 'utf-8',
+        'type': '通知'
+    },
+    {
+        'department_EN': 'snnu_index',
+        'department_CN': '学校主页',
+        'url': 'http://www.snnu.edu.cn/sdxw.htm',
+        'url_main': 'http://www.snnu.edu.cn/info/1084/',
+        'rule': 'info/1084/(?P<link>\d+.htm)" target="_blank" title="(?P<title>[^"]+?)"><[^<]+?<[^<]+?<[^<]+?<p class="qh-wide-pushtime">(?P<date>\d*-\d*-\d*)',
+        'coding': 'utf-8',
+        'type': '新闻' 
+    }
+]
 ```
 ## Packaging exe(Windows)
 1. Install  pywin32
@@ -119,6 +142,13 @@ SPIDER_CONFIG = [
 `pyinstaller -F main.py`Or`pyinstaller -F -i logo.ico main.py`
 5. Go to the Dist folder and you can see the Main.exe
 `cd dist`
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+| [<img src="https://avatars3.githubusercontent.com/u/7782671?v=4" width="100px;"/><br /><sub><b>Keyi Xie</b></sub>](https://xiekeyi98.github.io/)<br />[💻](https://github.com/ZhaoQi99/School_Notice/commits?author=xiekeyi98 "Code") [📖](https://github.com/ZhaoQi99/School_Notice/commits?author=xiekeyi98 "Documentation")| [<img src="https://avatars3.githubusercontent.com/u/40024866?v=4" width="100px;"/><br /><sub><b>jhy</b></sub>](https://Small-funny.github.io/)<br />[💻](https://github.com/ZhaoQi99/School_Notice/commits?author=Small-funny "Code") [📖](https://github.com/ZhaoQi99/School_Notice/commits?author=Small-funny "Documentation")|
+| :---: | :---: |
 
 ## License & Author
 * Author:Qi Zhao([zhaoqi99@outlook.com](mailto:zhaoqi99@outlook.com))

@@ -1,11 +1,13 @@
-import twilio
 '''
-Created on Mar 7, 2018
-
 @author: QiZhao
+@contact: zhaoqi99@outlook.com
+@since: 2018-05-07
 @license: GNU GPLv3
-@version: 0.2.0
+@version: 0.3.0
+@LastModifiedBy: QiZhao
+@LastModifiedDate: 2018-10-24
 '''
+import twilio
 from twilio.rest import Client
 from email.mime.text import MIMEText
 import smtplib
@@ -13,6 +15,7 @@ from tool import Log_Write
 import configs
 import requests
 import json
+import time
 
 def Send_sms(send_number, msg):
     '''
@@ -132,18 +135,18 @@ def send_to_wechat(str='default_words!'):
         },
         "msgtype":"text"
     }
-    url="https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token="+get_token()
     try:
+        url="https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token="+get_token()
         jsonstr = json.dumps(pay_send_all,ensure_ascii=False,indent = 2 ) ; # 转换到json，注意处理中文的unicode
         headers = {'content-type': 'text/json','charset':'utf-8'} # 加http header，命令以utf-8解析
         r=requests.post(url=url,data=jsonstr.encode('utf-8') , headers=headers )
         # result=r.json()
         log_send_wechat = '微信发送成功'
-    except ConnectionError:
+    except Exception:
         log_send_wechat = '微信发送失败'
     return log_send_wechat
 
-def Send(msgs, subject, send_number, to_addr_str, flag=True):
+def Send(msgs, subject, send_number, to_addr_str, message_type,flag=True):
     '''
     向手机号码为send_number的人发送通知信息
     向to_addr_str中的邮箱地址发送主题为subject的通知信息
@@ -158,20 +161,20 @@ def Send(msgs, subject, send_number, to_addr_str, flag=True):
         send_number: 短信接收者的手机号码
         to_addr_str: 收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串
             例如：'example@qq.com','example1@qq.com,example2@qq.com'
+        message_type: 类型(通知/新闻)
         flag: 一个可选变量，用来决定是否在发送日志中记录此次发送信息，默认为True(记录)
     '''
-    temp = ''
     log_send = []
 #     log_send=['test\n']    # Only for test
 
     for msg in msgs:
-        temp = subject + '有新通知了,快去看看吧' + '\n' + '标题:' + msg['title']\
-            + '\n' + '时间:' + msg['date'] + '\n' + '查看:' + msg['link']
+        temp="{}有新{},快去看看吧\n标题:{}\n时间:{}\n查看:{}".format(
+            subject,message_type,msg['title'],msg['date'],msg['link'])
         log_send_sms = []
         log_send_email = []
-        log_send_wechat = [] 
+        log_send_wechat = []
         log_send_sms.append(Send_sms(send_number, temp))
-        log_send_email.append(Send_email(temp, to_addr_str, subject + '更新通知'))
+        log_send_email.append(Send_email(temp, to_addr_str, subject+message_type+'更新'+tool.time_text()))
         log_send_wechat.append(send_to_wechat(temp))
         log_send.append(log_send_sms)
         log_send.append(log_send_email)

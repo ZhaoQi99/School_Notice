@@ -1,137 +1,181 @@
 '''
-Created on Oct 19, 2018
 @author: QiZhao
+@contact: zhaoqi99@outlook.com
+@since: 2018-09-19
+@license: GNU GPLv3
+@version: 0.2.1
+@LastModifiedBy: jhy
+@LastModifiedDate: 2018-10-27
 '''
-import pypyodbc
-import os
+import pymysql
+import re
 
 
-def ExistTable(data_base, table_name):
+class SqlHelper():
     '''
-    判断数据库中是否存在某张表,返回True或Flase
-
+    数据库帮助类，实现数据库的一些操作
     Args:
-        data_base: 数据库文件的文件名
-        table_name: 表名
-    Returns:
-        返回True或Flase
+        target_ip: 连接目标的ip
+        user_name: 数据库用户名
+        pwd: 数据库用户的密码
     '''
 
-    path = os.getcwd() + "\\" + data_base + ".mdb"
-    try:
-        connection = pypyodbc.win_connect_mdb(path)
-        cursor = connection.cursor()
-        res = cursor.tables()
-        tables = []
-        for i in res:
-            tables.append(i[2])
-        if table_name in tables:
-            return True
-        else:
-            return False
-    except Exception as e:
-        connection.rollback()
-        connection.close()
-        raise e
+    def __init__(self, target_ip, user_name, pwd):
+        self.target_ip = target_ip
+        self.user_name = user_name
+        self.pwd = pwd
 
-
-def Execute(data_base, sql):
-    '''
-    执行一条SQL语句,返回SQL语句执行后影响的行数
-
-    Args:
-        data_base: 数据库文件的文件名
-        sql: SQL语句
-    Returns:
-        res: SQL语句执行后影响的行数
-    '''
-
-    path = os.getcwd() + "\\" + data_base + ".mdb"
-    try:
-        connection = pypyodbc.win_connect_mdb(path)
-        cursor = connection.cursor()
-        res = cursor.execute(sql)
-        connection.commit()
-        connection.close()
-        return res
-    except Exception as e:
-        connection.rollback()
-        connection.close()
-        raise e
-
-
-def CreateDatabase(data_base):
-    '''
-    判断当前路径是否存在数据库文件
-    如果不存在,则尝试创建数据库文件,
-    返回创建的结果
-
-    Args:
-        data_base: 数据库文件的文件名
-    Returns:
-        返回True或Flase
-    '''
-    path = os.getcwd() + "\\" + data_base + ".mdb"
-    try:
-        if not os.path.exists(path):
-            connection = pypyodbc.win_create_mdb(path)
+    def ExistTable(self, db_name, table_name):
+        '''
+        判断数据库中是否存在某张表,返回True或Flase
+        Args:
+            db_name: 数据库名称
+            table_name: 表名
+        Returns:
+            返回True或Flase
+        '''
+        try:
+            connection = pymysql.connect(
+                host=self.target_ip, user=self.user_name, passwd=self.pwd, db=db_name)
+            cursor = connection.cursor()
+            sql = 'show tables;'
+            cursor.execute(sql)
+            tables = [cursor.fetchall()]
+            table_list = re.findall('(\'.*?\')', str(tables))
+            table_list = [re.sub("'", '', each) for each in table_list]
+            if table_name in table_list:
+                return True
+            else:
+                return False
+        except Exception as e:
+            connection.rollback()
             connection.close()
-            return True
-        return False
-    except Exception as e:
-        raise e
+            raise e
 
+    def Execute(self, db_name, sql):
+        '''
+        执行一条SQL语句,返回SQL语句执行后影响的行数
+        Args:
+            db_name: 数据库名称
+            sql: SQL语句
+        Returns:
+            res: SQL语句执行后影响的行数
+        '''
+        try:
+            connection = pymysql.connect(
+                host=self.target_ip, user=self.user_name, passwd=self.pwd, db=db_name)
+            cursor = connection.cursor()
+            res = cursor.execute(sql)
+            connection.commit()
+            connection.close()
+            return res
+        except Exception as e:
+            connection.rollback()
+            connection.close()
+            raise e
 
-def Fetchall(data_base, sql):
-    '''
-    执行一条SQL语句,返回查询结果的所有行
-    Args:
-        data_base: 数据库文件的文件名
-        sql: SQL语句
-    Returns:
-        res: 一个list,包含查询的结果,
-        元素为元组,代表一行信息
-    '''
-    path = os.getcwd() + "\\" + data_base + ".mdb"
-    try:
-        connection = pypyodbc.win_connect_mdb(path)
-        cursor = connection.cursor()
-        cursor.execute(sql)
-        res = cursor.fetchall()
-        connection.close()
-        return res
-    except Exception as e:
-        connection.rollback()
-        connection.close()
-        raise e
+    def FetchAll(self, db_name, sql):
+        '''
+        执行一条SQL语句,返回查询结果的所有行
+        Args:
+            db_name: 数据库名称
+            sql: SQL语句
+        Returns:
+            res: 一个list,包含查询的结果,元素为元组,代表一行信息
+        '''
+        try:
+            connection = pymysql.connect(
+                host=self.target_ip, user=self.user_name, passwd=self.pwd, db=db_name)
+            cursor = connection.cursor()
+            cursor.execute(sql)
+            res = cursor.fetchall()
+            connection.close()
+            return res
+        except Exception as e:
+            connection.rollback()
+            connection.close()
+            raise e
 
+    def FetchCol(self, db_name, table_name, sql, column):
+        '''
+        执行一条sql语句,并从查询结果中筛选指定的某一列的所有内容
+        Args:
+            db_name: 数据库名称
+            table_name: 表名
+            sql: SQL语句
+            column: 第几列,从1开始
+        Returns:
+            res: 一个list,包含指定列的所有结果
+        '''
+        try:
+            connection = pymysql.connect(
+                host=self.target_ip, user=self.user_name, passwd=self.pwd, db=db_name)
+            cursor = connection.cursor()
+            temp_sql = "select count(*) from information_schema.columns where table_schema='" + \
+                db_name + "' and table_name='" + table_name+"'"
+            cursor.execute(temp_sql)
+            tup=cursor.fetchone()
+            col_count=int(tup[0])
+            if column > col_count or column < 1:
+                raise IndexError
+            cursor.execute(sql)
+            res = cursor.fetchall()
+            ret = []
+            column-=1
+            for col in res:
+                ret.append(col[column])
+            connection.close()
+            return ret
+        except Exception as e:
+            connection.rollback()
+            connection.close()
+            raise e
+        
+    def CreateDatabase(self,db_name):
+        '''
+        创建一个数据库.如果已存在该数据库,则删除该数据库后再创建
 
-def FetchRow(data_base, sql, column):
-    '''
-    执行一条sql语句,并从查询结果中筛选指定的某一列的所有内容
+        Args:
+            db_name: 数据库名称
+        Returns:
+            res: 返回True或Flase
+        '''
+        try:
+            connection = pymysql.connect(
+                host=self.target_ip, user=self.user_name, passwd=self.pwd)
+            cursor = connection.cursor()
+            sql='DROP DATABASE '+db_name
+            cursor.execute(sql)
+            sql='CREATE DATABASE if not exists '+db_name
+            cursor.execute(sql)
+            connection.commit()
+            connection.close()
+        except Exception as e:
+            connection.rollback()
+            connection.close()
+            raise e
+        
+    def ExistDatabase(self,db_name):
+        '''
+        判断是否存在某个数据库,返回True或Flase
 
-    Args:
-        data_base: 数据库文件的文件名
-        sql: SQL语句
-        column: 第几列,从0开始
-    Returns:
-        res: 一个list,包含指定列的所有结果
-    '''
-    path = os.getcwd() + "\\" + data_base + ".mdb"
-    try:
-        connection = pypyodbc.win_connect_mdb(path)
-        cursor = connection.cursor()
-        cursor.execute(sql)
-        row_count = cursor._NumOfCols()
-        if column >= row_count:
-            raise IndexError
-        res = cursor.fetchall()
-        ret = []
-        for col in res:
-            ret.append(col[column])
-        connection.close()
-        return ret
-    except Exception as e:
-        connection.rollback()
-        connection.close()
-        raise e
+        Args:
+            db_name: 数据库名称
+        Returns: 返回True或Flase
+        '''
+        try:
+            connection = pymysql.connect(
+                host=self.target_ip, user=self.user_name, passwd=self.pwd)
+            cursor = connection.cursor()
+            cursor.execute('show databases')
+            databases = cursor.fetchall()
+            database_list=re.findall('(\'.*?\')', str(databases))
+            database_list = [re.sub("'", '', each) for each in database_list]
+            if db_name in database_list:
+                return True
+            else:
+                return False
+        except Exception as e:
+            connection.rollback()
+            connection.close()
+            raise e

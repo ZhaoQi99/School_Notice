@@ -1,11 +1,19 @@
 # encoding='utf-8'
 '''
-Created on Sep 19, 2018
-
 @author: QiZhao
+@contact: zhaoqi99@outlook.com
+@since: 2018-09-19
 @license: GNU GPLv3
-@version: 0.2.0
+@version: 0.3.0
+@LastModifiedBy: QiZhao
+@LastModifiedDate: 2018-12-24
 '''
+# show right
+SHOW_RIGHT=False
+
+# save type
+# File/MySQL
+SAVE_TYPE='MYSQL'
 
 # show config
 SCHOOL_NAME = ''
@@ -29,22 +37,6 @@ LOG_ENABLED = True
 
 # spider config
 SPIDER_CONFIG = [
-    {
-        'subject_EN': '',
-        'subject_CN': '',
-        'url': '',
-        'url_main': '',
-        'rule': '',
-        'coding': ''
-    },
-    {
-        'subject_EN': '',
-        'subject_CN': '',
-        'url': '',
-        'url_main': '',
-        'rule': '',
-        'coding': ''
-    }
 ]
 
 # we_chat config
@@ -53,3 +45,8 @@ GRANT_TYPE = 'client_credential'
 APPID = ' '
 SECRET = ' ' 
 
+# mysql config
+TARGET_IP=''
+SQL_USERNAME=''
+SQL_PASSWORD=''
+DATABASE_NAME=''
