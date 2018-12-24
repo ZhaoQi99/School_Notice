@@ -44,11 +44,12 @@ def Data_processing(department_EN, data, url_main,message_type):
     返回检查更新的状态码与处理后的数据
 
     Args:
-        subject_EN: 生成的数据文件的文件名
+        department_EN: 生成的数据文件的文件名
         data: 存储通知主要内容的列表，且该列表每个元素为字典
         例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'id=5'},
         {'title':'关于xxx的通知','date':'2017-03-10','link':'id=5'}]
         url_main: 单条通知的url的公共部分
+        message_type: 类型(通知/新闻)
     Returns:
         status: 检查更新的状态码,无新通知时为0,首次抓取为-1,有新通知时通知条数
         new_data: 存储经处理后的通知内容的列表,且该列表每个元素为字典
@@ -88,15 +89,6 @@ def Data_processing(department_EN, data, url_main,message_type):
                 item['date'] = item['date'].replace('/', '-')  # 将日期统一转换为yy-mm-dd格式
                 status += 1
                 new_data.append(item)
-                
-        # 存储到文件中
-        f_temp = open(file, 'ab')
-        for item in new_data:
-            f_temp.write(item['title'].encode('utf-8'))
-            f_temp.write(" ".encode('utf-8') + item['date'].encode('utf-8'))
-            f_temp.write(" ".encode('utf-8') + item['link'].encode('utf-8'))
-            f_temp.write("\n".encode('utf-8'))
-        f_temp.close()
          
     elif configs.SAVE_TYPE.upper()=="MYSQL":
         helper = sqlhelper.SqlHelper(
@@ -124,19 +116,34 @@ def Data_processing(department_EN, data, url_main,message_type):
             
         if link_count == 0:  # 首次抓取
             status = -1
+    return status, new_data
 
+def Save(new_data,department_EN,message_type):
+    # 将新抓取到的通知信息写入数据文件
+    if configs.SAVE_TYPE.upper()=="FILE":
+        if message_type=="通知":
+            file = "Data/{}_{}.md".format(department_EN,"notice")
+        else:
+            file="Data/{}_{}.md".format(department_EN,"news")
+            
+        # 存储到文件中
+        f_temp = open(file, 'ab')
+        for item in new_data:
+            f_temp.write(item['title'].encode('utf-8'))
+            f_temp.write(" ".encode('utf-8') + item['date'].encode('utf-8'))
+            f_temp.write(" ".encode('utf-8') + item['link'].encode('utf-8'))
+            f_temp.write("\n".encode('utf-8'))
+        f_temp.close()
+        
+    elif configs.SAVE_TYPE.upper()=="MYSQL":
+        table_name=department_EN
+        helper = sqlhelper.SqlHelper(
+        configs.TARGET_IP, configs.SQL_USERNAME, configs.SQL_PASSWORD)
         for item in new_data:
             sql = "insert into" + " " + table_name + "(link,title,date,type) values ('%s','%s','%s','%s')" % (
                 item['link'], item['title'], item['date'],item['type'])
-    #         print(sql)
             helper.Execute(configs.DATABASE_NAME, sql)
-            
-    # Todo: 解决频繁开启关闭数据库的问题
-    # Todo: 异常处理
-
-    # 将新抓取到的通知信息写入数据文件
-    return status, new_data
-
+    return True
 
 def Log_generate(status, data, department_CN,message_type):
     '''
@@ -146,7 +153,7 @@ def Log_generate(status, data, department_CN,message_type):
         data:存储通知提醒主要内容的列表，且该列表每个元素为字典
         例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'},
         {'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'}]
-        subject_CN: 抓取的网站类型
+        department_CN: 抓取的部门名称
         status: 检查更新的状态码
 
     Returns:
@@ -193,7 +200,7 @@ def Spider(dic, flag=True):
     '''
     data_use = Spider_data(dic['url'], dic['rule'], dic['coding'])
     status, new_data = Data_processing(dic['department_EN'], data_use, dic['url_main'],dic['type'])
-
+    Save(new_data, dic['department_EN'], dic['type'])
     log_txt = Log_generate(status, new_data, dic['department_CN'],dic['type'])
     if flag == True:
         if dic['type']=="通知":

@@ -37,15 +37,6 @@ LOG_ENABLED = True
 
 # spider config
 SPIDER_CONFIG = [
-    {
-        'department_EN': '',
-        'department_CN': '',
-        'url': '',
-        'url_main': '',
-        'rule': '',
-        'coding': '',
-        'type': ''
-    }
 ]
 
 # we_chat config
@@ -55,7 +46,7 @@ APPID = ' '
 SECRET = ' ' 
 
 # mysql config
-TARGET_IP='localhost'
+TARGET_IP=''
 SQL_USERNAME=''
 SQL_PASSWORD=''
 DATABASE_NAME=''
