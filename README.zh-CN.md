@@ -21,7 +21,7 @@
 - [x] 发送日志、更新检查日志 
 - [x] 日志功能可选
 - [ ] 每个用户要提醒的部门可选
-- [x] 数据库存储
+- [x] 数据库存储/文件存储
 
 ## 依赖项
 * [Python](http://www.python.org/)
@@ -66,48 +66,70 @@ AUTHOR_EMAIL = ''
 ```
 LOG_ENABLED = True
 ```
+### Save Type Config
+数据存储类型,分为文件存储，数据库存储
+```
+SAVE_TYPE = 'MYSQL'
+SAVE_TYPE = 'File'
+```
+### Show Right Config
+是否显示版权信息
+```
+SHOW_RIGHT = False
+```
+
 ### Spider Config
-爬虫的相关配置，包括:部门类型(EN)，部门类型(CN)中，"更多通知"页的链接，链接的公共部分，正则表达式，网页编码格式
-subject_EN：数据文件的文件名
-subject_CN：用于在日志、邮件标题中显示
+爬虫的相关配置，包括:部门名称(EN)，部门名称(CN)中，"更多通知"页的链接，链接的公共部分，正则表达式，网页编码格式，类型(通知/新闻）
+department_EN：数据文件的文件名
+department_CN：用于在日志、邮件标题中显示
 **警告:正则表达式中必须有三个分组，且名称必须为`link,date,title`**
 如:`info/1085/(?P<link>\d+\.htm)" target="_blank">(?P<title>[\s\S]{5,100})（(?P<date>\d*-\d*-\d*)）`
 
 ```python
 SPIDER_CONFIG = [
-{
-    'subject_EN':'',
-    'subject_CN':'',
-    'url': '',
-    'url_main' : '',
-    'rule' : '',
-    'coding':''
-},
-{
-    'subject_EN':'',
-    'subject_CN':'',
-    'url': '',
-    'url_main' : '',
-    'rule' : '',
-    'coding':''
-}
-  ]
+	{
+	    'department_EN': '',
+	    'department_CN': '',
+	    'url': '',
+	    'url_main': '',
+	    'rule': '',
+	    'coding': '',
+	    'type': '' 
+	},
+	{
+	    'department_EN': '',
+	    'department_CN': '',
+	    'url': '',
+	    'url_main': '',
+	    'rule': '',
+	    'coding': '',
+	    'type': '' 
+	}
+]
 ```
 这里有一个爬虫配置的例子:
 #### 例子
 ```python
 SPIDER_CONFIG = [
-{
-'subject_EN':'snnu_index', 'subject_CN':'师大主页', 'url': 'http://www.snnu.edu.cn/tzgg.htm', 'url_main' : 'http://www.snnu.edu.cn/info/1085/',
- 'rule' : 'info/1085/(?P<link>\d+\.htm)" target="_blank">(?P<title>[\s\S]{5,100})（(?P<date>\d*-\d*-\d*)）','coding':'utf-8'},
-{'subject_EN':'snnu_css', 'subject_CN':'计科院主页', 'url': 'http://ccs.snnu.edu.cn/tzgg.htm', 'url_main' : 'http://ccs.snnu.edu.cn/'
-, 'rule' : '<a target="_blank" href="(?P<link>[^"]*)">(?P<title>[^( </)]*)[^"]*"[^>]*>(?P<date>\d*-\d*-\d*)','coding':'utf-8'},
-{'subject_EN':'snnu_jwc', 'subject_CN':'教务处主页', 'url': 'http://jwc.snnu.edu.cn/news_more.xhm?lm=2', 'url_main' : 'http://jwc.snnu.edu.cn/html/news_view.xhm?newsid=',
- 'rule' : 'newsid=(?P<link>\d*)" [^ ]* title="(?P<title>[^(">)]*)[^<]*[^(]*\((?P<date>\d*/\d*/\d*)','coding':'gbk'},
-{'subject_EN':'snnu_xsc', 'subject_CN':'学生处主页', 'url': 'http://www.xsc.snnu.edu.cn/Announcements.asp', 'url_main' : 'http://www.xsc.snnu.edu.cn/Announcements.asp?id=144&bh=',
- 'rule' : 'gk3">(?P<date>\d*-\d*-\d*)[^;]*;[^;]*;[^;]*;[^;]*;bh=(?P<link>\d*)[^>]*>(?P<title>[^</]*)','coding':'gbk'},
-{'subject_EN':'snnu_lib', 'subject_CN':'图书馆主页', 'url': 'http://www.lib.snnu.edu.cn/action.do?webid=w-d-bggg-l', 'url_main' :  'http://www.lib.snnu.edu.cn/action.do?webid=w-l-showmsg&gtype=a&pid=',
- 'rule' :  'pid=(?P<link>\d*)[\s\S]{20,57}>(?P<title>[^<]*)</[af][\S\s]{18,70}(?P<date>\d{4}-\d*-\d*)','coding':'utf-8'}]
+    {
+        'department_EN': 'snnu_index',
+        'department_CN': '学校主页',
+        'url': 'http://www.snnu.edu.cn/tzgg.htm',
+        'url_main': 'http://www.snnu.edu.cn/info/1085/',
+        'rule': 'info/1085/(?P<link>\d+\.htm)" target="_blank">(?P<title>[\s\S]{5,100})（(?P<date>\d*-\d*-\d*)）',
+        'coding': 'utf-8',
+        'type': '通知'
+    },
+    {
+        'department_EN': 'snnu_index',
+        'department_CN': '学校主页',
+        'url': 'http://www.snnu.edu.cn/sdxw.htm',
+        'url_main': 'http://www.snnu.edu.cn/info/1084/',
+        'rule': 'info/1084/(?P<link>\d+.htm)" target="_blank" title="(?P<title>[^"]+?)"><[^<]+?<[^<]+?<[^<]+?<p class="qh-wide-pushtime">(?P<date>\d*-\d*-\d*)',
+        'coding': 'utf-8',
+        'type': '新闻' 
+    }
+]
 ```
 ## 打包exe(Windows)
 1. 安装pywin32
