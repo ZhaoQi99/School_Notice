@@ -1,0 +1,635 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+   <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <script type="text/javascript" src="/templates/main/js/jquery.js"></script>
+    <title>通知公告</title>
+    <script type="text/javascript">
+    $(function () {
+       
+        var currentCategoryId = GetQueryString('category_id');
+        if (currentCategoryId==151||currentCategoryId==152) {
+            if (getCookie("AdminName") == '' || getCookie("AdminName")==null)
+            {
+                location.href = '/templates/main/login.aspx';
+            }
+        }
+
+
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+    })
+    </script>
+</head>
+<body>
+    
+
+    <!--Header-->
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>西安市公安局文化保卫支队</title>
+    <link rel="stylesheet" href="/templates/main/css/css.css" />
+    <link rel="stylesheet" href="/templates/main/css/m-p.css" />
+    <link rel="stylesheet" href="/templates/main/css/w-h.css" />
+
+    <!--大图切换-->
+    <script type="text/javascript" src="/templates/main/js/jquery.js"></script>
+    <script type="text/javascript" src="/templates/main/js/common.js"></script>
+    <script type="text/javascript" src="/templates/main/js/lrtk.js"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $(".sousuo").click(function () {
+                if ($('.f_hot_input').val() == "") {
+                    alert('请输入关键词！');
+                    return false;
+                }
+                else {
+                    SiteSearch('/search.aspx', '#keywords');
+                }
+            });
+            $(".f_hot_input").keypress(function () {
+                if (event.keyCode == 13) {
+                    if ($('.f_hot_input').val() == "") {
+                        alert('请输入关键词！');
+                        return false;
+                    }
+                    else {
+                        SiteSearch('/search.aspx', '#keywords');
+                    }
+                }
+            });
+        })
+
+        function setHomePage(obj,url){
+            try{
+                obj.style.behavior='url(#default#homepage)';
+                obj.setHomePage(url);
+            }catch(e){
+                if(window.netscape){
+                    try{
+                        netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+                    }catch(e){
+                        alert("抱歉，此操作被浏览器拒绝！\n\n请在浏览器地址栏输入“about:config”并回车然后将[signed.applets.codebase_principal_support]设置为'true'");
+                    }
+                }else{
+                    alert("抱歉，您所使用的浏览器无法完成此操作。\n\n您需要手动将【"+url+"】设置为首页。");
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header_bg h-60">
+        <div class="wide">
+            <div class="left f_header m-t17"><a href="http://www.snnu.edu.cn" target="_blank">学校主页</a> | <a href="#" class="hrefs" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://hgxy.e-dar.cn:8001);">设为首页</a> | <a href="/danpian_show.aspx?category_id=124">联系我们</a>| <a href="http://www.chem.snnu.edu.cn/admin/login.aspx" target="_blank">后台管理</a> </div>
+            <div class="right f_header m-l10 m-t28"><a href="#">中文</a> | <a href="#">EN</a></div>
+            <div class="right m-t28 f_header pos_rel m-l20 shj">
+                手机站
+                <div class="erweima"><img src="/templates/main/images/erweima.png" width="143" height="143" /></div>
+            </div>
+            <div class="f_hot_search m-t11">
+                <input id="keywords" class="f_hot_input" name="fname" placeholder="搜索关键词" type="text" />
+                <div class="f_hot_but m-t7 sousuo"><img src="/templates/main/images/ico.png" /></div>
+                <div class="clear"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="wide m-t13 m-b13">
+        <div class="left"><img src="/templates/main/images/logo.jpg" /></div>
+        <div class="right nav">
+          
+            <ul>
+                <li><a href="/index.aspx">首页</a></li>
+                
+                <li >
+                    <a href="/danpian_show.aspx?category_id=1"
+                        >学院概况
+                    </a>
+                </li>
+                
+                <li >
+                    <a href="/teach_list.aspx?category_id=6" href="/wenzi_list.aspx?category_id=5"
+                        >师资队伍
+                    </a>
+                </li>
+                
+                <li >
+                    <a href="/wenzi_list.aspx?category_id=132" href="/wenzi_list.aspx?category_id=11"
+                        >人才培养
+                    </a>
+                </li>
+                
+                <li >
+                    <a href="/danpian_show.aspx?category_id=141"
+                        >科学研究
+                    </a>
+                </li>
+                
+                <li >
+                    <a href="/wenzi_list.aspx?category_id=15"
+                        >党务学工
+                    </a>
+                </li>
+                
+                <li >
+                    <a href="http://chemlab.snnu.edu.cn/" target="_blank" href="/danpian_show.aspx?category_id=131"
+                        >实验中心
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <script type="text/javascript">
+    $(function() {
+        $(".erweima").hide();
+        $(".shj").mouseover(function() {
+            $(this).find(".erweima").show();
+        });
+        $(".shj").mouseout(function() {
+            $(this).find(".erweima").hide();
+        });
+    })
+    </script>
+</body>
+</html>
+    <!--/Header-->
+
+    <!--Banner-->
+    <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>
+    
+    <div style="background:url(/upload/201709/12/201709121130466369.png) no-repeat center top; height: 250px;"></div>
+    
+</body>
+</html>
+
+    <!--/Banner-->
+
+    <div class="wide pos_rel">
+        <!--Left-->
+        <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        $(function () {
+            $(".subNav").click(function () {
+                $(this).toggleClass("currentDd").siblings(".subNav").removeClass("currentDd")
+                $(this).toggleClass("currentDt").siblings(".subNav").removeClass("currentDt")
+
+                // 修改数字控制速度， slideUp(500)控制卷起速度
+                $(this).next(".navContent").slideToggle(500).siblings(".navContent").slideUp(500);
+            })
+        })
+    </script>
+</head>
+<body>
+    
+
+    <div class="w-260 left pos_abs left_t">
+        <div class="left_bj">
+            <span></span>
+            新闻
+        </div>
+        
+       <div class="subNavBox">
+                
+                <div
+                     class="subNav currentDd  currentDt" >
+                    <a href="/wenzi_list.aspx?category_id=19"
+                        >通知公告
+                    </a>
+                    
+                    <ul class="navContent " style="display:block">
+                        
+                    </ul>
+                    
+                </div>
+                
+                <div
+                     class="subNav">
+                    <a href="/tuwen_list.aspx?category_id=20"
+                        >学院新闻
+                    </a>
+                    
+                    <ul class="navContent " style="display:block">
+                        
+                    </ul>
+                    
+                </div>
+                
+                <div
+                     class="subNav">
+                    <a href="/activity_list.aspx?category_id=148" href="/wenzi_list.aspx?category_id=13"
+                        >学术活动
+                    </a>
+                    
+                    <ul class="navContent " style="display:block">
+                        
+                        <li>
+                            <a  href="/wenzi_list.aspx?category_id=148"
+							>学术报告</a>
+                        </li>
+                        
+                        <li>
+                            <a  href="/wenzi_list.aspx?category_id=149"
+							>学术会议</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </div>
+                
+                <div
+                     class="subNav">
+                    <a href="/wenzi_list.aspx?category_id=14"
+                        >科研进展
+                    </a>
+                    
+                    <ul class="navContent " style="display:block">
+                        
+                    </ul>
+                    
+                </div>
+                
+            </ul>
+        </div>
+        <div class="clear"></div>
+       
+    </div>
+</body>
+
+</html>
+
+        <!--/Left-->
+        <div class="w-910 right m-t40">
+            <!--Top-->
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>    
+    <div class="right_hot">
+        <a href="/index.aspx">首页</a>
+        >
+        
+                <a href="/wenzi_list.aspx?category_id=19"
+                    >
+                    新闻
+                </a>
+               
+
+            
+                >
+                
+                <a href="/wenzi_list.aspx?category_id=19"
+                             class="secondTitle_hover">通知公告</a>
+
+              
+    </div>
+</body>
+</html>
+
+            <!--/Top-->
+
+            <div class="m-t15 m-b30 amin_list right_h">
+                <ul>
+                    
+                    <li>
+                    <a href="/neiye_show.aspx?id=3249">关于公费师范生教育硕士补交作业的通知</a>
+                        <span>2018-12-20</span>
+                    </li>
+                    
+                    <li>
+                    <a href="/neiye_show.aspx?id=3248">关于延长公费师范生教育硕士学习年限的通知</a>
+                        <span>2018-12-20</span>
+                    </li>
+                    
+                    <li>
+                    <a href="/neiye_show.aspx?id=3238"><转>关于2019年国家公派高级研究学者、访问学者、博士后项目申报工作的通知</a>
+                        <span>2018-12-19</span>
+                    </li>
+                    
+                    <li>
+                    <a href="/neiye_show.aspx?id=3223">2019-2020 Chinese Government Scholarship-Chinese University Program</a>
+                        <span>2018-12-18</span>
+                    </li>
+                    
+                    <li>
+                    <a href="/neiye_show.aspx?id=3222">2019-2020年中国政府奖学金高校自主招生项目-陕西师范大学招生简章</a>
+                        <span>2018-12-18</span>
+                    </li>
+                    
+                    <li>
+                    <a href="/neiye_show.aspx?id=3221">关于收听收看庆祝改革开放40周年大会的通知</a>
+                        <span>2018-12-17</span>
+                    </li>
+                    
+                    <li>
+                    <a href="/neiye_show.aspx?id=3229"><转>关于组织申报2019年度陕西高校青年创新团队的通知</a>
+                        <span>2018-12-17</span>
+                    </li>
+                    
+                    <li>
+                    <a href="/neiye_show.aspx?id=3217"><转>关于2019年度国家自然科学基金项目申请与结题等有关事项的通知</a>
+                        <span>2018-12-15</span>
+                    </li>
+                    
+                </ul>
+            </div>
+
+            <div class="sabrosus">
+                <span class="disabled">上一页</span><span class="current">1</span><a href="/wenzi_list.aspx?category_id=19&page=2">2</a><a href="/wenzi_list.aspx?category_id=19&page=3">3</a><a href="/wenzi_list.aspx?category_id=19&page=4">4</a><a>...</a><a href="/wenzi_list.aspx?category_id=19&page=138">138</a><a href="/wenzi_list.aspx?category_id=19&page=2">下一页</a><div class='clear'></div>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+
+    <!--Footer-->
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title></title>
+</head>
+<body>
+    <div class="foot">
+        <div class="wide p-t30 p-b35">
+            <div class="left w-251"><img src="/templates/main/images/foot_logo.jpg" /></div>
+            <div class="left m-r20">
+                
+                
+                <div class="foot_font">
+                    <ul>
+                        <h3>学院概况</h3>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/danpian_show.aspx?category_id=1"
+                                >
+                                学院简介
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/danpian_show.aspx?category_id=2"
+                                >
+                                现任领导
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/danpian_show.aspx?category_id=3"
+                                >
+                                机构设置
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/danpian_show.aspx?category_id=4"
+                                >
+                                历史沿革
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/danpian_show.aspx?category_id=146"
+                                >
+                                院情统计
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                
+                <div class="foot_font">
+                    <ul>
+                        <h3>师资队伍</h3>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/teach_list.aspx?category_id=6" href="/wenzi_list.aspx?category_id=5"
+                                >
+                                教学科研人员
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/danpian_show.aspx?category_id=8"
+                                >
+                                专业技术人员
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a
+                                 href="/tupian_list.aspx?category_id=136" href="/danpian_show.aspx?category_id=9"
+                                >
+                                党政管理人员
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/danpian_show.aspx?category_id=10"
+                                >
+                                光荣退休人员
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                
+                <div class="foot_font">
+                    <ul>
+                        <h3>人才培养</h3>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a
+                                href="/wenzi_list.aspx?category_id=132" href="/wenzi_list.aspx?category_id=11"
+                                >
+                                本科生
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a
+                                href="/wenzi_list.aspx?category_id=138" href="/wenzi_list.aspx?category_id=12"
+                                >
+                                研究生
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                
+                <div class="foot_font">
+                    <ul>
+                        <h3>科学研究</h3>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/danpian_show.aspx?category_id=141"
+                                >
+                                研究机构
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/wenzi_list.aspx?category_id=142"
+                                >
+                                承担项目
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/wenzi_list.aspx?category_id=143"
+                                >
+                                授权专利
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/wenzi_list.aspx?category_id=144"
+                                >
+                                获奖成果
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/wenzi_list.aspx?category_id=145"
+                                >
+                                论文专著
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                
+                <div class="foot_font">
+                    <ul>
+                        <h3>党务学工</h3>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/wenzi_list.aspx?category_id=15"
+                                >
+                                党建工作
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/wenzi_list.aspx?category_id=16"
+                                >
+                                工会工作
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/wenzi_list.aspx?category_id=147"
+                                >
+                                统战工作
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/wenzi_list.aspx?category_id=160"
+                                >
+                                学生工作
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="/wenzi_list.aspx?category_id=18"
+                                >
+                                校友工作
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                
+                <div class="foot_font">
+                    <ul>
+                        <h3>实验中心</h3>
+                        
+                        <li>
+                            <img src="/templates/main/images/dian.jpg" />
+                            <a href="http://chemlab.snnu.edu.cn/" target="_blank" href="/danpian_show.aspx?category_id=131"
+                                >
+                                实验中心
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                
+              
+
+            <div class="left m-l20" style="font-size:10px;text-align:center">
+                <img class="w-143 h-143" src="/templates/main/images/weixin.jpg" />
+                <h6>化学化工学院团委微信公众号</h6>
+            </div>
+            <div class="clear"></div>
+        </div>
+     
+        <div class="clear"></div>
+    </div>
+
+    <div class="footer_bg p-t15">
+        
+        电话：+86-(0)29-81530727　
+        传真：+86-(0)29-81530727　　
+        E-mail：chem@snnu.edu.cn　
+        邮编：710119　　<br />
+        地址：陕西师范大学长安校区致知楼　 
+        版权所有©陕西师范大学化学化工学院       技术支持：西电易达
+    </div>
+</body>
+</html>
+    <!--/Footer-->
+
+</body>
+</html>

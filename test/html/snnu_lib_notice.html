@@ -1,0 +1,376 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>陕西师范大学图书馆</title>
+<link href="/css/v2/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="/css/v2/lanmu.css" rel="stylesheet" type="text/css" />
+<link href="" rel="stylesheet" type="text/css" id="mediaForLanmu" />
+<link href="/css/v2/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="/css/v2/lanmu_menu.css" rel="stylesheet" type="text/css" />
+<link href="" rel="stylesheet" type="text/css" id="mediaForMenu" />
+<link href="/css/v2/lanmu_color.css" rel="stylesheet" type="text/css" />
+<link href="/css/v2/lanmu-special.css" rel="stylesheet" type="text/css" />
+<link href="/css/v2/share.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+	//l:>=1280（1180） m:>=1024（980） x:《1024（360）
+	var mediaForIndexCSS=document.getElementById("mediaForLanmu");
+	var mediaForMenuCSS=document.getElementById("mediaForMenu");
+	
+	//检测屏幕尺寸
+	var winWidth=window.screen.availWidth;
+	var winHeight=window.screen.availHeight;
+	
+	if(winWidth>=1900){
+		mediaSize="l";
+	}else if(winWidth>=1280){
+		mediaForIndexCSS.setAttribute("href","/css/v2/lanmu_normal.css");
+		mediaForMenuCSS.setAttribute("href","/css/v2/lanmu_menu_normal.css");
+	}else if(winWidth>=1024){
+		mediaForIndexCSS.setAttribute("href","/css/v2/lanmu_medium.css");
+		mediaForMenuCSS.setAttribute("href","/css/v2/lanmu_menu_medium.css");
+	}else{
+		mediaForIndexCSS.setAttribute("href","/css/v2/lanmu_phone.css");
+		mediaForMenuCSS.setAttribute("href","/css/v2/menu_phone.css");
+	}	
+	
+</script>
+
+<script type="text/javascript" src="/script/v2/jquery/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/script/jquery/jquery.metadata.js"></script>
+<script type="text/javascript" src="/script/jquery/jquery.validate.js"></script>
+<script type="text/javascript" src="/script/jquery/messages_cn.js"></script>
+<script type="text/javascript" src="/script/jquery/jquery.active.js"></script>
+<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/script/v2/util_2.js"></script>
+<script type="text/javascript" src="/script/v2/util.js"></script>
+<script type="text/javascript" src="/script/v2/menu.js"></script>
+<script type="text/javascript" src="/css/v2/bootstrap/js/bootstrap.js"></script>
+</head>
+
+<body>
+<div class="container-fluid">
+	
+	<div class="row">
+		<div id="v1_logo" class="col-md-12">
+			<div id="v1_logo_block">			
+				<ul><li>
+
+
+
+
+
+	</li></ul>
+				<div class="float_clear"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div id="v2_head" class="col-md-12" >
+			<div id="v2_head_block">
+				<div class="menu-item menu-item-index">
+					<a class="menu-title" href="./action.do?webid=w-l-index">首页</a>
+				</div>
+				<div class="menu-item-box">
+					<div class="menu-item menu-item-zyjs">
+						<a class="menu-title " href="./action.do?webid=w-l-showchildmenu&cmid=w-a-zyjs">资源检索</a>
+					</div>
+					<div class="menu-item menu-item-dzfw">
+						<a class="menu-title " href="./action.do?webid=w-l-showchildmenu&cmid=w-b-dzfw">读者服务</a>
+					</div>
+					<div class="menu-item menu-item-ckzx">
+						<a class="menu-title " href="./action.do?webid=w-l-showchildmenu&cmid=w-c-zxybz">咨询与帮助</a>
+					</div>
+					<div class="menu-item menu-item-bggk">
+						<a class="menu-title menu-item-current" href="./action.do?webid=w-l-showchildmenu&cmid=w-d-gytsg">关于本馆</a>
+					</div>
+					<div class="menu-item menu-item-wdzh">
+						<a class="menu-title " href="./action.do?webid=w-l-showchildmenu&cmid=w-e-mylib">我的图书馆</a>
+					</div>
+				</div>
+			</div>		
+		</div>
+	</div>
+	
+	<div class="row">
+		<div id="b1" class="col-md-12">
+			<div id="b1_block">
+				<div class="nowlocation">
+					您现在的位置：<a href="./action.do?webid=w-l-index">图书馆主页</a> > <a href="./action.do?webid=w-l-showchildmenu&cmid=w-d-gytsg">关于图书馆</a> > <span class="nowlocation_current">馆内公告</span>
+
+				</div>
+				<div class="siblingsmenus">
+					<a href="./action.do?webid=w-s-bgjs"><div class="siblingsmenu">本馆概况</div></a><a href="./action.do?webid=w-s-xrld"><div class="siblingsmenu">现任领导</div></a><a href="./action.do?webid=w-s-zzjg"><div class="siblingsmenu">部门职责</div></a><a href="./action.do?webid=w-s-kfsj"><div class="siblingsmenu">开放时间</div></a><a href="./action.do?webid=w-s-gzzd"><div class="siblingsmenu">规章制度</div></a><a href="./action.do?webid=w-s-gcfb"><div class="siblingsmenu">馆藏分布</div></a><a href="./action.do?webid=w-s-gsfm"><div class="siblingsmenu">馆舍风貌</div></a><a href="./action.do?webid=w-l-gjbh"><div class="siblingsmenu">古籍保护</div></a><a href="./action.do?webid=w-d-bggg-l"><div class="siblingsmenu siblingsmenu_current">馆内公告</div></a><a href="./action.do?webid=w-d-bgxw-l"><div class="siblingsmenu">馆内新闻</div></a><a href="./action.do?webid=w-d-xxgk-l"><div class="siblingsmenu">图书馆信息公开</div></a><a href="./action.do?webid=w-l-showchildmenu&cmid=w-d-bgdsj"><div class="siblingsmenu">本馆大事记<span class="iconfont iconfont-sanjiaoxing"></span></div></a><a href="./action.do?webid=w-s-tsgtx"><div class="siblingsmenu">图书馆通讯</div></a><a href="./action.do?webid=w-l-showchildmenu&cmid=w-d-xfdd"><div class="siblingsmenu">先锋地带<span class="iconfont iconfont-sanjiaoxing"></span></div></a>
+
+					<div class="float_clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div id="b2" class="col-md-12">
+			<div id="b2_block">
+					<!--开始------呈现主体内容  -->
+						<h4>馆内公告</h4>
+						
+							
+								<table class="tt-aw ff-bggg-l">
+<tr>
+<th class="tx1">
+标题
+</th>
+<th class="tx2">
+时间
+</th>
+<th class="tx3">
+访问次数
+</th>
+</tr><tr class="yd">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=674&goback=w-d-bggg-l" target=_blank>听报告，趣答题——网上报告厅有奖竞赛活动获奖通知</a>
+</td>
+<td class="x2">
+2018-12-21
+</td>
+<td class="x3">
+69
+</td>
+</tr><tr class="ys">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=669&goback=w-d-bggg-l" target=_blank>2018 IEEE Xplore科技文献趣味检索达人挑战赛获奖通知</a>
+</td>
+<td class="x2">
+2018-12-07
+</td>
+<td class="x3">
+253
+</td>
+</tr><tr class="yd">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=667&goback=w-d-bggg-l" target=_blank>陕西师范大学文献QQ群开通公告</a>
+</td>
+<td class="x2">
+2018-12-03
+</td>
+<td class="x3">
+1632
+</td>
+</tr><tr class="ys">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=663&goback=w-d-bggg-l" target=_blank><font color="#d4235d">关于“笔墨传情，文脉相承”古籍函套题名书写人招募的通知</font></a>
+</td>
+<td class="x2">
+2018-11-19
+</td>
+<td class="x3">
+483
+</td>
+</tr><tr class="yd">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=662&goback=w-d-bggg-l" target=_blank>听报告，趣答题——网上报告厅有奖竞赛活动通知</a>
+</td>
+<td class="x2">
+2018-11-19
+</td>
+<td class="x3">
+453
+</td>
+</tr><tr class="ys">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=661&goback=w-d-bggg-l" target=_blank><font color="#d4235d">2018年专业技术职务任职资格评审初审通过人员名单公示</font></a>
+</td>
+<td class="x2">
+2018-11-16
+</td>
+<td class="x3">
+597
+</td>
+</tr><tr class="yd">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=657&goback=w-d-bggg-l" target=_blank><font color="#d4235d">爱如生系列数据库升级为网络版使用通知</font></a>
+</td>
+<td class="x2">
+2018-11-12
+</td>
+<td class="x3">
+580
+</td>
+</tr><tr class="ys">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=654&goback=w-d-bggg-l" target=_blank><font color="#d4235d">“聪明大脑”来答题—科学文库有奖问答获奖名单</font></a>
+</td>
+<td class="x2">
+2018-11-06
+</td>
+<td class="x3">
+404
+</td>
+</tr><tr class="yd">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=653&goback=w-d-bggg-l" target=_blank>2018年陕西师范大学读书节“真人图书馆”邀你来聆听分享</a>
+</td>
+<td class="x2">
+2018-11-05
+</td>
+<td class="x3">
+267
+</td>
+</tr><tr class="ys">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=648&goback=w-d-bggg-l" target=_blank><font color="#d4235d">陕西师范大学图书馆中外文报刊使用情况调查表</font></a>
+</td>
+<td class="x2">
+2018-10-26
+</td>
+<td class="x3">
+416
+</td>
+</tr><tr class="yd">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=646&goback=w-d-bggg-l" target=_blank>IEEE Xplore科技文献趣味检索达人挑战赛</a>
+</td>
+<td class="x2">
+2018-10-23
+</td>
+<td class="x3">
+364
+</td>
+</tr><tr class="ys">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=645&goback=w-d-bggg-l" target=_blank>2018陕西师范大学读书节.寻书大赛比赛时间等事项的通知</a>
+</td>
+<td class="x2">
+2018-10-22
+</td>
+<td class="x3">
+802
+</td>
+</tr><tr class="yd">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=642&goback=w-d-bggg-l" target=_blank>写心得 赢Kindle（有奖征文）</a>
+</td>
+<td class="x2">
+2018-10-17
+</td>
+<td class="x3">
+763
+</td>
+</tr><tr class="ys">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=636&goback=w-d-bggg-l" target=_blank>关于陕西师范大学图书馆精品拓片的通知</a>
+</td>
+<td class="x2">
+2018-10-11
+</td>
+<td class="x3">
+502
+</td>
+</tr><tr class="yd">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=635&goback=w-d-bggg-l" target=_blank>清渠如许，活水为源——2018陕西师范大学读书节</a>
+</td>
+<td class="x2">
+2018-10-08
+</td>
+<td class="x3">
+657
+</td>
+</tr><tr class="ys">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=634&goback=w-d-bggg-l" target=_blank>导航有北斗，寻书有你2018陕西师范大学读书节·寻书大赛</a>
+</td>
+<td class="x2">
+2018-10-08
+</td>
+<td class="x3">
+343
+</td>
+</tr><tr class="yd">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=632&goback=w-d-bggg-l" target=_blank>2018陕西师范大学读书节·经典晨读人员分组名单</a>
+</td>
+<td class="x2">
+2018-09-30
+</td>
+<td class="x3">
+533
+</td>
+</tr><tr class="ys">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=631&goback=w-d-bggg-l" target=_blank>关于开通“陕师大教师外文服务群”的试用通知</a>
+</td>
+<td class="x2">
+2018-09-30
+</td>
+<td class="x3">
+456
+</td>
+</tr><tr class="yd">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=630&goback=w-d-bggg-l" target=_blank>“聪明大脑”来答题——科学文库有奖问答活动</a>
+</td>
+<td class="x2">
+2018-09-30
+</td>
+<td class="x3">
+576
+</td>
+</tr><tr class="ys">
+<td class="x1">
+<a href="./action.do?webid=w-l-showmsg&gtype=a&pid=629&goback=w-d-bggg-l" target=_blank>2018年国庆节图书馆值班安排表</a>
+</td>
+<td class="x2">
+2018-09-28
+</td>
+<td class="x3">
+646
+</td>
+</tr></table>
+<div id="pagenav"><a href="/action.do?webid=w-d-bggg-l&pageid=1" class="nowpage">1</a><a href="/action.do?webid=w-d-bggg-l&pageid=2" >2</a><a href="/action.do?webid=w-d-bggg-l&pageid=3" >3</a><a href="/action.do?webid=w-d-bggg-l&pageid=4" >4</a><a href="/action.do?webid=w-d-bggg-l&pageid=5" >5</a><a href="/action.do?webid=w-d-bggg-l&pageid=6" >6</a><a href="/action.do?webid=w-d-bggg-l&pageid=7" >7</a><a href="/action.do?webid=w-d-bggg-l&pageid=2">></a><a href="/action.do?webid=w-d-bggg-l&pageid=17">>|</a></div>
+
+							
+							
+						
+					<!--结束------呈现主体内容  -->
+
+<!-- 自动识别模块 --开始 -->
+		<!-- 1、返回模块 -->
+		
+		<!-- 2、相关页面模块 -->
+	
+		
+<!-- 自动识别模块 --结束 -->
+				<div class="float_clear"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div id="v6" class="col-md-12">
+			<div id="v6_block">
+				<div id="v6_1"><img src="/imagev2/logo-bottom.png" /></div>
+				<div id="v6_2">
+					<span>地址:西安市长安区西长安街620号</span><span>邮编：710119 联系电话：029-85310113</span><br id="br" />
+					<span>Copyright© 2016 Shaanxi Normal University Library.</span> <span>All rights reserved.</span>
+				</div>
+				<div id="v6_3"><img src="/imagev2/weixin2.jpg" /><br />&nbsp;&nbsp;&nbsp;&nbsp;图书馆微信</div>
+				<div class="float_clear"></div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+</body>
+</html>
