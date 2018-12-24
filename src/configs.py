@@ -4,10 +4,17 @@
 @contact: zhaoqi99@outlook.com
 @since: 2018-09-19
 @license: GNU GPLv3
-@version: 0.2.1
+@version: 0.3.0
 @LastModifiedBy: QiZhao
-@LastModifiedDate: 2018-10-27
+@LastModifiedDate: 2018-12-24
 '''
+# show right
+SHOW_RIGHT=False
+
+# save type
+# File/MySQL
+SAVE_TYPE='MYSQL'
+
 # show config
 SCHOOL_NAME = ''
 VERSION = ''
@@ -31,20 +38,13 @@ LOG_ENABLED = True
 # spider config
 SPIDER_CONFIG = [
     {
-        'subject_EN': '',
-        'subject_CN': '',
+        'department_EN': '',
+        'department_CN': '',
         'url': '',
         'url_main': '',
         'rule': '',
-        'coding': ''
-    },
-    {
-        'subject_EN': '',
-        'subject_CN': '',
-        'url': '',
-        'url_main': '',
-        'rule': '',
-        'coding': ''
+        'coding': '',
+        'type': ''
     }
 ]
 
@@ -55,7 +55,7 @@ APPID = ' '
 SECRET = ' ' 
 
 # mysql config
-TARGET_IP=''
+TARGET_IP='localhost'
 SQL_USERNAME=''
 SQL_PASSWORD=''
 DATABASE_NAME=''

@@ -5,9 +5,9 @@ import configs
 @contact: zhaoqi99@outlook.com
 @since: 2018-05-07
 @license: GNU GPLv3
-@version: 0.2.1
+@version: 0.3.0
 @LastModifiedBy: QiZhao
-@LastModifiedDate: 2018-10-27
+@LastModifiedDate: 2018-12-24
 '''
 import urllib.request
 import re
@@ -27,7 +27,6 @@ def Spider_data(url, rule, coding='utf-8'):
         例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'id=5'},
         {'title':'关于xxx的通知','date':'2017-03-10','link':'id=5'}]
     '''
-
     response = urllib.request.urlopen(url)
     data = response.read().decode(coding)
     pattern = re.compile(rule, re.S)
@@ -38,7 +37,7 @@ def Spider_data(url, rule, coding='utf-8'):
     return data_use
 
 
-def Data_processing(subject_EN, data, url_main):
+def Data_processing(department_EN, data, url_main,message_type):
     '''
     读取数据文件,并将新抓取的通知信息中的链接部分处理为长链接,
     然后以通知链接为参照,与数据库中的数据进行对比，并将新通知写入数据库,
@@ -57,48 +56,89 @@ def Data_processing(subject_EN, data, url_main):
         {'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com‘}]
     '''
 
-    helper = sqlhelper.SqlHelper(
-        configs.TARGET_IP, configs.SQL_USERNAME, configs.SQL_PASSWORD)
-    if helper.ExistDatabase(configs.DATABASE_NAME)==False:
-        helper.CreateDatabase(configs.DATABASE_NAME)
     # 处理为长网址
     for item_dict in data:
         item_dict['link'] = url_main + item_dict['link']
-
-    table_name = subject_EN
-    if helper.ExistTable(configs.DATABASE_NAME, table_name) == False:
-        sql = 'CREATE TABLE' + ' ' + table_name + \
-            '(id int PRIMARY KEY AUTO_INCREMENT,link Text,title Text,date Text)'
-        helper.Execute(configs.DATABASE_NAME, sql)
-
-    # 收集所有的link信息
-    sql = 'select * from' + ' ' + table_name
-    all_link = helper.FetchCol(configs.DATABASE_NAME, table_name,sql, 2)
-
+    
     # 生成新数据
     status = 0  # 是否有新通知的标志
     new_data = []
-    for item in data:
-        if item['link'] not in all_link:
-            item['date'] = item['date'].replace('/', '-')  # 将日期统一转换为yy-mm-dd格式
-            status += 1
-            new_data.append(item)
-    if len(all_link) == 0:  # 首次抓取
-        status = -1
+    
+    if configs.SAVE_TYPE.upper()=="FILE":
+        if message_type=="通知":
+            file = "Data/{}_{}.md".format(department_EN,"notice")
+        else:
+            file="Data/{}_{}.md".format(department_EN,"news")
+        tool.Mkfile(file)  # 初次抓取时新建数据文件
+        f_before = open(file, 'rb')  # 读取数据文件中的通知信息
+        txt_before = f_before.read().decode('utf-8')
+        f_before.close()
+    
+        # 收集所有的link信息
+        all_link = []
+        split_rule = '(?P<title>[^ ]*) (?P<date>\d*-\d*-\d*) (?P<link>[^\n]*)\n'
+        pattern = re.compile(split_rule, re.S)
+        data_before = pattern.finditer(txt_before)
+        for item in data_before:
+            dic = item.groupdict()
+            all_link.append(dic['link'])
+            
+        for item in data:
+            if item['link'] not in all_link:
+                item['date'] = item['date'].replace('/', '-')  # 将日期统一转换为yy-mm-dd格式
+                status += 1
+                new_data.append(item)
+                
+        # 存储到文件中
+        f_temp = open(file, 'ab')
+        for item in new_data:
+            f_temp.write(item['title'].encode('utf-8'))
+            f_temp.write(" ".encode('utf-8') + item['date'].encode('utf-8'))
+            f_temp.write(" ".encode('utf-8') + item['link'].encode('utf-8'))
+            f_temp.write("\n".encode('utf-8'))
+        f_temp.close()
+         
+    elif configs.SAVE_TYPE.upper()=="MYSQL":
+        helper = sqlhelper.SqlHelper(
+            configs.TARGET_IP, configs.SQL_USERNAME, configs.SQL_PASSWORD)
+        if helper.ExistDatabase(configs.DATABASE_NAME)==False:
+            helper.CreateDatabase(configs.DATABASE_NAME)
+    
+        table_name = department_EN
+        if helper.ExistTable(configs.DATABASE_NAME, table_name) == False:
+            sql = 'CREATE TABLE' + ' ' + table_name + \
+                '(id int PRIMARY KEY AUTO_INCREMENT,link Text,title Text,date Text,type Text)'
+            helper.Execute(configs.DATABASE_NAME, sql)
+    
+        sql = "select count(*) from" + " " + table_name+" where type='"+message_type+"'"
+        link_count = helper.FetchCol(configs.DATABASE_NAME, table_name,sql,1)[0]
+    
+        for item in data:
+            temp_sql="select * from" + " " + table_name+" where link='"+item['link']+"'"
+            ret=helper.FetchCol(configs.DATABASE_NAME, table_name,temp_sql, 2)
+            if len(ret)==0:
+                item['date'] = item['date'].replace('/', '-')  # 将日期统一转换为yy-mm-dd格式
+                item['type']=message_type
+                status += 1
+                new_data.append(item)
+            
+        if link_count == 0:  # 首次抓取
+            status = -1
 
+        for item in new_data:
+            sql = "insert into" + " " + table_name + "(link,title,date,type) values ('%s','%s','%s','%s')" % (
+                item['link'], item['title'], item['date'],item['type'])
+    #         print(sql)
+            helper.Execute(configs.DATABASE_NAME, sql)
+            
     # Todo: 解决频繁开启关闭数据库的问题
     # Todo: 异常处理
 
     # 将新抓取到的通知信息写入数据文件
-    for item in new_data:
-        sql = "insert into" + " " + table_name + "(link,title,date) values ('%s','%s','%s')" % (
-            item['link'], item['title'], item['date'])
-#         print(sql)
-        helper.Execute(configs.DATABASE_NAME, sql)
     return status, new_data
 
 
-def Log_generate(status, data, subject_CN):
+def Log_generate(status, data, department_CN,message_type):
     '''
     依据检查更新的结果，生成不同的日志内容，并返回日志内容
 
@@ -115,9 +155,9 @@ def Log_generate(status, data, subject_CN):
         [['关于xxx的通知','2017-03-10','http://xxxx.com'],['关于xxx的通知','2017-03-10','http://xxxx.com']]   
     '''
     if status == -1:
-        log_txt = '首次抓取' + subject_CN + '!\n'
+        log_txt = '首次抓取{}:{}！'.format(department_CN,message_type)
     elif status == 0:
-        log_txt = subject_CN + "暂无新通知!" + '\n'
+        log_txt = "{}暂无新{}!".format(department_CN,message_type)
     else:
         log_txt = []
         for dic in data:
@@ -129,7 +169,7 @@ def Log_generate(status, data, subject_CN):
     return log_txt
 
 
-def Spider(url, url_main, rule, subject_CN, subject_EN, coding, flag=True):
+def Spider(dic, flag=True):
     '''
     爬取url的源码，并从中按照rule提供的正则表达式规则提取有用信息，并对数据进行处理，
     生成通知提醒的内容，在subject_EN+'_log.md'文件中记录日志，
@@ -151,10 +191,14 @@ def Spider(url, url_main, rule, subject_CN, subject_EN, coding, flag=True):
             例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'},
         {'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'}]
     '''
-    data_use = Spider_data(url, rule, coding)
-    status, new_data = Data_processing(subject_EN, data_use, url_main)
+    data_use = Spider_data(dic['url'], dic['rule'], dic['coding'])
+    status, new_data = Data_processing(dic['department_EN'], data_use, dic['url_main'],dic['type'])
 
-    log_txt = Log_generate(status, new_data, subject_CN)
+    log_txt = Log_generate(status, new_data, dic['department_CN'],dic['type'])
     if flag == True:
-        tool.Log_Write(subject_EN, log_txt)
+        if dic['type']=="通知":
+            tool.Log_Write(dic['department_EN']+"_notice", log_txt)
+        else:
+            tool.Log_Write(dic['department_EN']+"_news", log_txt)
+            
     return status, new_data

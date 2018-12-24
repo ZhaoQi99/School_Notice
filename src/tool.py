@@ -4,9 +4,9 @@
 @contact: zhaoqi99@outlook.com
 @since: 2018-05-08
 @license: GNU GPLv3
-@version: 0.2.0
+@version: 0.3.0
 @LastModifiedBy: QiZhao
-@LastModifiedDate: 2018-10-18
+@LastModifiedDate: 2018-12-24
 '''
 
 import time
@@ -42,7 +42,7 @@ def Log_Write(subject, log_txt, flag=1):
     log_show = ''
     log_return = []
     if(type(log_txt) == str):  # 处理第一次爬取或无新通知时的日志的写入
-        temp = time_text() + ' ' + log_txt
+        temp = time_text() + ' ' + log_txt+"\n"
         log_show = subject + ':' + temp
         log_return.append(temp)
         file.write(temp)
@@ -72,7 +72,7 @@ def Mkdir(dir_name, flag=1):
     File_Path = os.getcwd() + '/' + dir_name + '/'
     if not os.path.exists(File_Path):
         os.makedirs(File_Path)
-        Log_Write('新建文件夹', File_Path + '\n', flag)
+        Log_Write('新建文件夹', File_Path, flag)
 
 
 def Mkfile(fname, flag=1):
@@ -88,4 +88,4 @@ def Mkfile(fname, flag=1):
     if not os.path.exists(fname):
         fobj = open(fname, 'w')
         fobj.close()
-        Log_Write('新建文件', fname + '\n', flag)
+        Log_Write('新建文件', fname, flag)
