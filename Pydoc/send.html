@@ -13,9 +13,9 @@
 @contact:&nbsp;zhaoqi99@outlook.com<br>
 @since:&nbsp;2018-05-07<br>
 @license:&nbsp;GNU&nbsp;GPLv3<br>
-@version:&nbsp;0.2.1<br>
-@LastModifiedBy:&nbsp;Keyi&nbsp;Xie<br>
-@LastModifiedDate:&nbsp;2018-10-23</tt></p>
+@version:&nbsp;0.3.0<br>
+@LastModifiedBy:&nbsp;QiZhao<br>
+@LastModifiedDate:&nbsp;2018-10-24</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,7 +27,8 @@
 <a href="json.html">json</a><br>
 </td><td width="25%" valign=top><a href="requests.html">requests</a><br>
 <a href="smtplib.html">smtplib</a><br>
-</td><td width="25%" valign=top><a href="twilio.html">twilio</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+<a href="twilio.html">twilio</a><br>
 </td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
@@ -35,7 +36,7 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-Send"><strong>Send</strong></a>(msgs, subject, send_number, to_addr_str, flag=True)</dt><dd><tt>向手机号码为send_number的人发送通知信息<br>
+<td width="100%"><dl><dt><a name="-Send"><strong>Send</strong></a>(msgs, subject, send_number, to_addr_str, message_type, flag=True)</dt><dd><tt>向手机号码为send_number的人发送通知信息<br>
 向to_addr_str中的邮箱地址发送主题为subject的通知信息<br>
 支持是否写入日志记录的选择&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;<br>
@@ -48,6 +49,7 @@ Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_number:&nbsp;短信接收者的手机号码<br>
 &nbsp;&nbsp;&nbsp;&nbsp;to_addr_str:&nbsp;收件人的邮箱地址，多个邮箱地址之间应以','分割，类型为字符串<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如：'example@qq.com','example1@qq.com,example2@qq.com'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;message_type:&nbsp;类型(通知/新闻)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;flag:&nbsp;一个可选变量，用来决定是否在发送日志中记录此次发送信息，默认为True(记录)</tt></dd></dl>
  <dl><dt><a name="-Send_email"><strong>Send_email</strong></a>(txt, to_addr_str, subject)</dt><dd><tt>向to_addr_str中的邮箱地址发送主题为subject，正文部分为txt的邮件<br>
 支持多人同时发送<br>

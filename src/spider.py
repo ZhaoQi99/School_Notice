@@ -40,7 +40,7 @@ def Spider_data(url, rule, coding='utf-8'):
 def Data_processing(department_EN, data, url_main,message_type):
     '''
     读取数据文件,并将新抓取的通知信息中的链接部分处理为长链接,
-    然后以通知链接为参照,与数据库中的数据进行对比，并将新通知写入数据库,
+    然后以通知链接为参照,与文件/数据库中的数据进行对比，并将新通知写入文件/数据库,
     返回检查更新的状态码与处理后的数据
 
     Args:
@@ -119,7 +119,16 @@ def Data_processing(department_EN, data, url_main,message_type):
     return status, new_data
 
 def Save(new_data,department_EN,message_type):
-    # 将新抓取到的通知信息写入数据文件
+    '''
+    将新抓取到的通知信息写入数据文件或数据库中
+
+    Args:
+        new_data: 存储经处理后的通知内容的列表,且该列表每个元素为字典
+            例如：[{'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com'},
+        {'title':'关于xxx的通知','date':'2017-03-10','link':'http://xxxx.com‘}]
+        department_EN: 生成的数据文件的文件名
+        message_type: 类型(通知/新闻)
+    '''
     if configs.SAVE_TYPE.upper()=="FILE":
         if message_type=="通知":
             file = "Data/{}_{}.md".format(department_EN,"notice")
@@ -158,7 +167,7 @@ def Log_generate(status, data, department_CN,message_type):
 
     Returns:
         log_txt: 日志的主要内容，类型为字符串或每个元素均为列表的列表，且元素列表的元素均为字符串。
-        例如:'首次抓取师师大主页！\n','师大主页暂无新通知！\n'
+        例如:'首次抓取师师大主页！','师大主页暂无新通知！'
         [['关于xxx的通知','2017-03-10','http://xxxx.com'],['关于xxx的通知','2017-03-10','http://xxxx.com']]   
     '''
     if status == -1:
